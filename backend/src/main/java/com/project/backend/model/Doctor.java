@@ -1,6 +1,7 @@
 package com.project.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -18,8 +19,8 @@ public class Doctor {
     private String specialization;
     private String description;
 
-    @JsonBackReference
-    @OneToMany(cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @OneToMany(mappedBy = "doctor", fetch = FetchType.EAGER)
     private List<Appointment> appointmentList;
 
     public long getId() {
