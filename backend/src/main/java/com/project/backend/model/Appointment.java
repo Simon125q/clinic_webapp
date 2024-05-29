@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "appointments")
 public class Appointment {
     @Id
     @GeneratedValue
@@ -12,12 +13,14 @@ public class Appointment {
     private String date;
     private String time;
 
-    @JsonBackReference
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @JsonBackReference(value = "doctor-appointment")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "doctor_id")
     private Doctor doctor;
 
-    @JsonBackReference
-    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonBackReference(value = "patient-appointment")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "patient_id")
     private Patient patient;
 
     public long getId() {

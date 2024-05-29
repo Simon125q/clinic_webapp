@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "doctors")
 public class Doctor {
 
     @Id
@@ -19,9 +21,9 @@ public class Doctor {
     private String specialization;
     private String description;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "doctor", fetch = FetchType.EAGER)
-    private List<Appointment> appointmentList;
+    @JsonManagedReference(value = "doctor-appointment")
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Appointment> appointmentList = new ArrayList<>();
 
     public long getId() {
         return id;

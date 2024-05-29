@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "patients")
 public class Patient {
     @Id
     @GeneratedValue
@@ -16,9 +18,9 @@ public class Patient {
     private String email;
     private String telephone;
 
-    @JsonManagedReference
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Appointment> appointmentList;
+    @JsonManagedReference(value = "patient-appointment")
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Appointment> appointmentList = new ArrayList<>();
 
     public long getId() {
         return id;
