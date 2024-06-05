@@ -19,7 +19,7 @@ public class Patient {
     private String telephone;
 
     @JsonManagedReference(value = "patient-appointment")
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Appointment> appointmentList = new ArrayList<>();
 
     public long getId() {

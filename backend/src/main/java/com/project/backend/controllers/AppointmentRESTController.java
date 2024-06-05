@@ -31,6 +31,7 @@ public class AppointmentRESTController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Appointment> addAppointment(@RequestBody Appointment appointment) {
+        System.out.println(appointment);
         appointmentRepository.save(appointment);
         return new ResponseEntity<Appointment>(appointment, HttpStatus.CREATED);
     }

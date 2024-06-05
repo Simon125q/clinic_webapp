@@ -3,6 +3,7 @@ package com.project.backend.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
 
 @Entity
 @Table(name = "appointments")
@@ -22,6 +23,9 @@ public class Appointment {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "patient_id")
     private Patient patient;
+
+    @OneToOne
+    private Prescription prescription;
 
     public long getId() {
         return id;
@@ -61,5 +65,24 @@ public class Appointment {
 
     public void setPatient(Patient patient) {
         this.patient = patient;
+    }
+
+    public Prescription getPrescription() {
+        return prescription;
+    }
+
+    public void setPrescription(Prescription prescription) {
+        this.prescription = prescription;
+    }
+
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "id='" + id + '\'' +
+                ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
+                ", doctor='" + doctor + '\'' +
+                ", patient='" + patient + '\'' +
+                '}';
     }
 }

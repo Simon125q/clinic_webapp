@@ -22,7 +22,7 @@ public class Doctor {
     private String description;
 
     @JsonManagedReference(value = "doctor-appointment")
-    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Appointment> appointmentList = new ArrayList<>();
 
     public long getId() {
