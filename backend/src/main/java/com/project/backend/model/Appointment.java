@@ -14,17 +14,25 @@ public class Appointment {
     private String date;
     private String time;
 
-    @JsonBackReference(value = "doctor-appointment")
-    @ManyToOne(fetch = FetchType.EAGER)
+//    @JsonBackReference(value = "doctor-appointment")
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "doctor_id")
+    @ManyToOne
     @JoinColumn(name = "doctor_id")
+    @JsonBackReference(value = "doctor-appointment")
     private Doctor doctor;
 
-    @JsonBackReference(value = "patient-appointment")
-    @ManyToOne(fetch = FetchType.EAGER)
+//    @JsonBackReference(value = "patient-appointment")
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "patient_id")
+    @ManyToOne
     @JoinColumn(name = "patient_id")
+    @JsonBackReference(value = "patient-appointment")
     private Patient patient;
 
-    @OneToOne(cascade = CascadeType.ALL)
+//    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "appointment", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "appointment-prescription")
     private Prescription prescription;
 
     public long getId() {

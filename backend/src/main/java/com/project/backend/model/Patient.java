@@ -12,14 +12,16 @@ import java.util.List;
 public class Patient {
     @Id
     @GeneratedValue
-    long id;
+    private long id;
     private String firstName;
     private String lastName;
     private String email;
     private String telephone;
 
+    //@JsonManagedReference(value = "patient-appointment")
+    //@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "patient")
     @JsonManagedReference(value = "patient-appointment")
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Appointment> appointmentList = new ArrayList<>();
 
     public long getId() {

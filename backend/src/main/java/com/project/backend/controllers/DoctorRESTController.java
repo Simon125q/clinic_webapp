@@ -1,5 +1,6 @@
 package com.project.backend.controllers;
 
+import com.project.backend.model.Appointment;
 import com.project.backend.model.Doctor;
 import com.project.backend.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,9 @@ public class DoctorRESTController {
         if (doctor == null) {
             System.out.println("Doctor not found!");
             return new ResponseEntity<Doctor>(HttpStatus.NOT_FOUND);
+        }
+        for (Appointment appointment : doctor.getAppointmentList()) {
+            // testing
         }
         doctorRepository.deleteById(id);
         return new ResponseEntity<Doctor>(HttpStatus.NO_CONTENT);
