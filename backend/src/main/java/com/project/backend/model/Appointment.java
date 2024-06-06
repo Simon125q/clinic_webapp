@@ -24,7 +24,7 @@ public class Appointment {
     @JoinColumn(name = "patient_id")
     private Patient patient;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Prescription prescription;
 
     public long getId() {
