@@ -2,6 +2,7 @@ package com.project.backend.controllers;
 
 import com.project.backend.model.Appointment;
 import com.project.backend.model.Doctor;
+import com.project.backend.repository.AppointmentRepository;
 import com.project.backend.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,10 +17,13 @@ import java.util.Map;
 @RequestMapping("/doctors")
 public class DoctorRESTController {
     private final DoctorRepository doctorRepository;
+    private final AppointmentRepository appointmentRepository;
 
     @Autowired
-    public DoctorRESTController(DoctorRepository doctorRepository) {
+    public DoctorRESTController(DoctorRepository doctorRepository,
+                                AppointmentRepository appointmentRepository) {
         this.doctorRepository = doctorRepository;
+        this.appointmentRepository = appointmentRepository;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -47,6 +51,11 @@ public class DoctorRESTController {
             System.out.println("Doctors not found!");
             return new ResponseEntity<Doctor>(HttpStatus.NOT_FOUND);
         }
+        for (Doctor doctor : doctors) {
+            for (Appointment appointment : doctor.getAppointmentList()) {
+                this.appointmentRepository.deleteById(appointment.getId());
+            }
+        }
         doctorRepository.deleteAll();
         return new ResponseEntity<Doctor>(HttpStatus.NO_CONTENT);
     }
@@ -58,7 +67,7 @@ public class DoctorRESTController {
             return new ResponseEntity<Doctor>(HttpStatus.NOT_FOUND);
         }
         for (Appointment appointment : doctor.getAppointmentList()) {
-            // testing
+            this.appointmentRepository.deleteById(appointment.getId());
         }
         doctorRepository.deleteById(id);
         return new ResponseEntity<Doctor>(HttpStatus.NO_CONTENT);

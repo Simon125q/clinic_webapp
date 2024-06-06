@@ -17,9 +17,8 @@ public class Patient {
     private String lastName;
     private String email;
     private String telephone;
+    private boolean isDeleted = false;
 
-    //@JsonManagedReference(value = "patient-appointment")
-    //@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @OneToMany(mappedBy = "patient")
     @JsonManagedReference(value = "patient-appointment")
     private List<Appointment> appointmentList = new ArrayList<>();
@@ -70,5 +69,13 @@ public class Patient {
 
     public void setAppointmentList(List<Appointment> appointmentList) {
         this.appointmentList = appointmentList;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }

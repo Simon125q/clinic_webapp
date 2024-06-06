@@ -46,7 +46,11 @@ public class PatientRESTController {
             System.out.println("Patients not found!");
             return new ResponseEntity<Patient>(HttpStatus.NOT_FOUND);
         }
-        patientRepository.deleteAll();
+        //patientRepository.deleteAll();
+        for (Patient patient : patients) {
+            patient.setDeleted(true);
+            patientRepository.save(patient);
+        }
         return new ResponseEntity<Patient>(HttpStatus.NO_CONTENT);
     }
     @RequestMapping(value="/{id}", method = RequestMethod.DELETE)
@@ -56,7 +60,9 @@ public class PatientRESTController {
             System.out.println("Patient not found!");
             return new ResponseEntity<Patient>(HttpStatus.NOT_FOUND);
         }
-        patientRepository.deleteById(id);
+        //patientRepository.deleteById(id);
+        patient.setDeleted(true);
+        patientRepository.save(patient);
         return new ResponseEntity<Patient>(HttpStatus.NO_CONTENT);
     }
 
