@@ -19,6 +19,11 @@ public class Patient {
     private String telephone;
     private boolean isDeleted = false;
 
+//    @OneToOne
+//    @JoinColumn(name = "patient_id")
+//    @JsonBackReference(value = "patient-user")
+//    private User userAccount;
+
     @OneToMany(mappedBy = "patient")
     @JsonManagedReference(value = "patient-appointment")
     private List<Appointment> appointmentList = new ArrayList<>();
@@ -78,4 +83,13 @@ public class Patient {
     public void setDeleted(boolean deleted) {
         isDeleted = deleted;
     }
+
+//    public User getUserAccount() {
+//        return userAccount;
+//    }
+//
+//    public void setUserAccount(User userAccount) {
+//        this.userAccount = userAccount;
+//    }
+
 }

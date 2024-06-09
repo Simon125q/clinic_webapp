@@ -7,23 +7,23 @@
       <span>
       <a routerLink="/ofert">Ofert</a>
     </span>
-      <span>
-      <a routerLink="/staff">Our Staff</a>
-    </span>
+<!--    <span>-->
+<!--      <a routerLink="/staff">Our Staff</a>-->
+<!--    </span>-->
       <span>
       <a routerLink="/contact">Contact</a>
     </span>
-    <span>
+    <span *ngIf="authority === 'admin'">
       <a routerLink="/admin">Admin</a>
     </span>
-    <span>
+    <span *ngIf="authority === 'patient'">
       <a routerLink="/user">User</a>
     </span>
-    <span>
+    <span *ngIf="authority === 'doctor'">
       <a routerLink="/doctor">Doctor</a>
     </span>
-    <span>
-      <a routerLink="/login">Login</a>
+    <span *ngIf="!authority">
+      <a routerLink="/auth/login">Login</a>
     </span>
   </nav>
 </header>

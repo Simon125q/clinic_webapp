@@ -6,6 +6,8 @@ import {ContactComponent} from "./contact/contact.component";
 import {AdminComponent} from "./admin/admin.component";
 import {DoctorComponent} from "./doctor/doctor.component";
 import {UserComponent} from "./user/user.component";
+import {LoginComponent} from "./login/login.component";
+import {RegisterComponent} from "./register/register.component";
 
 export const routes: Routes = [
   {path: '', redirectTo: '/start', pathMatch: "full"},
@@ -16,4 +18,6 @@ export const routes: Routes = [
   {path: 'admin', component: AdminComponent},
   {path: 'doctor', component: DoctorComponent},
   {path: 'user', component: UserComponent},
+  {path: 'auth/login', component: LoginComponent},
+  {path: 'signup', component: RegisterComponent},
 ];

@@ -21,6 +21,11 @@ public class Doctor {
     private String specialization;
     private String description;
 
+//    @OneToOne
+//    @JoinColumn(name = "doctor_id")
+//    @JsonBackReference(value = "doctor-user")
+//    private User userAccount;
+
     @OneToMany(mappedBy = "doctor")
     @JsonManagedReference(value = "doctor-appointment")
     private List<Appointment> appointmentList = new ArrayList<>();
@@ -88,4 +93,12 @@ public class Doctor {
     public void setAppointmentList(List<Appointment> appointmentList) {
         this.appointmentList = appointmentList;
     }
+
+//    public User getUserAccount() {
+//        return userAccount;
+//    }
+//
+//    public void setUserAccount(User userAccount) {
+//        this.userAccount = userAccount;
+//    }
 }
