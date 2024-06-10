@@ -1,17 +1,22 @@
+import {Appointment} from "./appointment.model";
+
 export class Patient {
   id?: number;
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   email: string;
   telephone: string;
   isDeleted: boolean;
+  appointmentList: Appointment[];
 
-  constructor(firstname: string, lastname: string, email: string, telephone: string, isDeleted: boolean) {
-    this.firstname = firstname;
-    this.lastname = lastname;
+  constructor(firstName: string, lastName: string, email: string,
+              telephone: string, isDeleted: boolean, appointmentList: Appointment[]) {
+    this.firstName = firstName;
+    this.lastName = lastName;
     this.email = email;
     this.telephone = telephone;
     this.isDeleted = isDeleted;
+    this.appointmentList = appointmentList;
   }
 
 }

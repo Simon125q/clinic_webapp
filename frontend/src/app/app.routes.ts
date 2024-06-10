@@ -8,6 +8,8 @@ import {DoctorComponent} from "./doctor/doctor.component";
 import {UserComponent} from "./user/user.component";
 import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
+import {ManagePatientsComponent} from "./manage-patients/manage-patients.component";
+import {ManageDoctorsComponent} from "./manage-doctors/manage-doctors.component";
 
 export const routes: Routes = [
   {path: '', redirectTo: '/start', pathMatch: "full"},
@@ -16,6 +18,8 @@ export const routes: Routes = [
   {path: 'staff', component: StaffComponent},
   {path: 'contact', component: ContactComponent},
   {path: 'admin', component: AdminComponent},
+  {path: 'admin/doctors', component: ManageDoctorsComponent},
+  {path: 'admin/patients', component: ManagePatientsComponent},
   {path: 'doctor', component: DoctorComponent},
   {path: 'user', component: UserComponent},
   {path: 'auth/login', component: LoginComponent},

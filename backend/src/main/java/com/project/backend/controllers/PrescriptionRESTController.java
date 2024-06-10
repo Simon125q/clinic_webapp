@@ -33,7 +33,7 @@ public class PrescriptionRESTController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Prescription> addPrescription(@RequestBody Prescription prescription) {
-        if (prescription.getAppointment() == null) {
+        if (prescription.getAppointment() != null) {
             prescriptionRepository.save(prescription);
             return new ResponseEntity<Prescription>(prescription, HttpStatus.CREATED);
         }

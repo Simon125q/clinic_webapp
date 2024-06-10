@@ -16,6 +16,7 @@ public class Prescription {
     @JsonBackReference(value = "appointment-prescription")
     private Appointment appointment;
 
+
     public long getId() {
         return id;
     }
