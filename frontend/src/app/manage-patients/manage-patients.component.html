@@ -1,0 +1,106 @@
+<div class="selection">
+  <nav>
+    <span>
+      <a routerLink="/admin/patients">Patients</a>
+    </span>
+    <span>
+      <a routerLink="/admin/patients">Patients</a>
+    </span>
+    <span>
+      <a>Appointments</a>
+    </span>
+  </nav>
+</div>
+<button (click)="addPatient()">Add new</button>
+<span>
+  <input [(ngModel)]="searchPhrase">
+  <button (click)="search()">Search</button>
+</span>
+<span class="dropdown">
+  <button class="dropbtn">Sort by</button>
+  <span class="dropdown-content">
+    <span (click)="sort('id')">id</span>
+    <span (click)="sort('firstname')">firstname</span>
+    <span (click)="sort('lastname')">lastname</span>
+    <span (click)="sort('email')">email</span>
+    <span (click)="sort('telephone')">telephone</span>
+    <span (click)="sort('specialization')">specialization</span>
+  </span>
+</span>
+<ul class="patients" *ngIf="filteredPatientList == undefined">
+  <li *ngFor="let doc of patientList">
+    <div class="a" (click)="displayDetail(doc)">
+      <span class="badge">{{doc.id}}</span>
+      {{doc.lastName}} {{doc.firstName}}
+    </div>
+  </li>
+</ul>
+<ul class="patients" *ngIf="filteredPatientList != undefined">
+  <li *ngFor="let doc of filteredPatientList">
+    <div class="a" (click)="displayDetail(doc)">
+      <span class="badge">{{doc.id}}</span>
+      {{doc.lastName}} {{doc.firstName}}
+    </div>
+  </li>
+</ul>
+
+
+<div class="detail" *ngIf="displayPatient">
+  <label>Firstname:
+    <input [(ngModel)]="displayPatient.firstName">
+  </label>
+  <br>
+  <label>Lastname:
+    <input [(ngModel)]="displayPatient.lastName">
+  </label>
+  <br>
+  <label>Email:
+    <input [(ngModel)]="displayPatient.email">
+  </label>
+  <br>
+  <label>Phone Number:
+    <input [(ngModel)]="displayPatient.telephone">
+  </label>
+  <br>
+  <ul>
+    <label>Appointments:</label>
+    <li *ngFor="let appointment of displayPatient.appointmentList">
+      <label>Date
+        <input [(ngModel)]="displayPatient.appointmentList[displayPatient.appointmentList.indexOf(appointment)].date">
+      </label>
+      <label>Time
+        <input [(ngModel)]="displayPatient.appointmentList[displayPatient.appointmentList.indexOf(appointment)].time">
+      </label>
+      <label *ngIf="appointment.prescription.recommendation">Prescription
+        <input [(ngModel)]="displayPatient.appointmentList[displayPatient.appointmentList.indexOf(appointment)].prescription.recommendation">
+      </label>
+    </li>
+  </ul>
+  <button (click)="updateSelected()">Update</button>
+  <button (click)="deleteSelected()">Delete</button>
+</div>
+
+<div class="add_new" *ngIf="addingNew">
+
+  <label>Firstname:
+    <input #docFirstname>
+  </label>
+  <br>
+  <label>Lastname:
+    <input #docLastname>
+  </label>
+  <br>
+  <label>Email:
+    <input #docEmail>
+  </label>
+  <br>
+  <label>Phone Number:
+    <input #docTelephone>
+  </label>
+  <br>
+  <button (click)='add(docFirstname.value, docLastname.value, docEmail.value,
+          docTelephone.value);
+          docFirstname.value = ""; docLastname.value = ""; docEmail.value = "";
+          docTelephone.value = "";'
+  >Add</button>
+</div>
