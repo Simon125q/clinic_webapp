@@ -2,6 +2,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, catchError, Observable, of, tap} from "rxjs";
 import {Doctor} from "../models/doctor.model";
 import {Injectable} from "@angular/core";
+import {Appointment} from "../models/appointment.model";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': "application/json"})
@@ -45,7 +46,7 @@ export class DoctorService {
                 doctorTelephone: string, doctorSpecialization: string, doctorDescription: string): Observable<Doctor> {
     const id = doctor.id;
     const url = `${this.doctorsUrl}/${id}`;
-    const changes: {[id: string]: string;} = {};
+    const changes: {[id: string]: string | Appointment[];} = {};
     if (doctorFirstName != "") {
       changes["firstname"] = doctorFirstName;
     }
@@ -64,6 +65,7 @@ export class DoctorService {
     if (doctorDescription != "") {
       changes["description"] = doctorDescription;
     }
+
     return this.http.patch<Doctor>(url, changes, httpOptions).pipe(
       tap((doctorChanged: Doctor) => this.log(`changed doctor id=${doctorChanged.id}`)),
       catchError(this.handleError<Doctor>('partialUpdate'))

@@ -1,0 +1,75 @@
+<div class="selection">
+  <nav>
+    <span>
+      <a routerLink="/admin/doctors">Doctors</a>
+    </span>
+    <span>
+      <a routerLink="/admin/patients">Patients</a>
+    </span>
+    <span>
+      <a routerLink="/admin/appointments">Appointments</a>
+    </span>
+  </nav>
+</div>
+<button (click)="addAppointment()">Add new</button>
+<span>
+  <input [(ngModel)]="searchPhrase">
+  <button (click)="search()">Search</button>
+</span>
+<span class="dropdown">
+  <button class="dropbtn">Sort by</button>
+  <span class="dropdown-content">
+    <span (click)="sort('id')">id</span>
+    <span (click)="sort('date')">date</span>
+    <span (click)="sort('time')">time</span>
+  </span>
+</span>
+<ul class="appointments" *ngIf="filteredAppointmentList == undefined">
+  <li *ngFor="let appointment of appointmentList">
+    <div class="a" (click)="displayDetail(appointment)">
+      <span class="badge">{{appointment.id}}</span>
+      {{appointment.date}} {{appointment.time}}
+    </div>
+  </li>
+</ul>
+<ul class="appointments" *ngIf="filteredAppointmentList != undefined">
+  <li *ngFor="let appointment of filteredAppointmentList">
+    <div class="a" (click)="displayDetail(appointment)">
+      <span class="badge">{{appointment.id}}</span>
+      {{appointment.date}} {{appointment.time}}
+    </div>
+  </li>
+</ul>
+
+
+<div class="detail" *ngIf="displayAppointment">
+  <label>Date:
+    <input [(ngModel)]="displayAppointment.date">
+  </label>
+  <br>
+  <label>Time:
+    <input [(ngModel)]="displayAppointment.time">
+  </label>
+  <br>
+  <label>Prescription:
+    <input [(ngModel)]="displayAppointment.prescription.recommendation">
+  </label>
+  <br>
+  <button (click)="updateSelected()">Update</button>
+  <button (click)="deleteSelected()">Delete</button>
+</div>
+
+<div class="add_new" *ngIf="addingNew">
+
+  <label>Date:
+    <input #appointmentDate>
+  </label>
+  <br>
+  <label>Time:
+    <input #appointmentTime>
+  </label>
+  <br>
+  <button (click)='add(appointmentDate.value, appointmentTime.value);
+          appointmentDate.value = ""; appointmentTime.value = "";'
+  >Add</button>
+</div>

@@ -117,6 +117,7 @@ public class DoctorRESTController {
         if (updates.containsKey("description")) {
             doctor.setDescription((String) updates.get("description"));
         }
+
         doctorRepository.save(doctor);
         return doctor;
     }

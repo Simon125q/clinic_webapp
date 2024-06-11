@@ -28,22 +28,22 @@ nav a:hover {
 nav a:active {
   background-color: black;
 }
-.doctors {
+.appointments {
   margin: 0 0 2em 0;
   list-style-type: none;
   padding: 0;
   width: 15em;
 }
-.doctors li {
+.appointments li {
   position: relative;
   cursor: pointer;
 }
 
-.doctors li:hover {
+.appointments li:hover {
   left: .1em;
 }
 
-.doctors div {
+.appointments div {
   color: #333;
   text-decoration: none;
   background-color: #EEE;
@@ -55,12 +55,12 @@ nav a:active {
   width: 100%;
 }
 
-.doctors div:hover {
+.appointments div:hover {
   color: #2c3a41;
   background-color: #e6e6e6;
 }
 
-.doctors div:active {
+.appointments div:active {
   background-color: #525252;
   color: #fafafa;
 }

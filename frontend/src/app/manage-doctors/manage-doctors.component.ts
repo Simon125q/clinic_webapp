@@ -6,6 +6,8 @@ import {RouterLink} from "@angular/router";
 import {NgForOf, NgIf} from "@angular/common";
 import {of} from "rxjs";
 import {FormsModule} from "@angular/forms";
+import {Appointment} from "../models/appointment.model";
+import {AppointmentService} from "../services/appointment.service";
 
 @Component({
   selector: 'app-manage-doctors',
