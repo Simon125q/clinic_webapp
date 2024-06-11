@@ -1,5 +1,6 @@
 package com.project.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -21,14 +22,6 @@ public class User {
     @NotBlank
     @Size(min=6, max=100)
     private String password;
-
-//    @OneToOne(mappedBy = "userAccount", cascade = CascadeType.ALL)
-//    @JsonManagedReference(value = "doctor-user")
-//    private Doctor doctor;
-
-//    @OneToOne(mappedBy = "userAccount", cascade = CascadeType.ALL)
-//    @JsonManagedReference(value = "patient-user")
-//    private Patient patient;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
@@ -73,22 +66,5 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
-
-//    public Doctor getDoctor() {
-//        return doctor;
-//    }
-//
-//    public void setDoctor(Doctor doctor) {
-//        this.doctor = doctor;
-//    }
-//
-//    public Patient getPatient() {
-//        return patient;
-//    }
-//
-//    public void setPatient(Patient patient) {
-//        this.patient = patient;
-//    }
-
 
 }

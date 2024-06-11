@@ -104,6 +104,9 @@ public class PatientRESTController {
         if (updates.containsKey("telephone")) {
             patient.setTelephone((String) updates.get("telephone"));
         }
+        if (updates.containsKey("username")) {
+            patient.setUsername((String) updates.get("username"));
+        }
         patientRepository.save(patient);
         return patient;
     }

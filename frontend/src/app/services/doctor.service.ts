@@ -16,6 +16,8 @@ export class DoctorService {
   constructor(private http: HttpClient) {
   }
 
+
+
   getDoctors(): Observable<Doctor[]> {
     return this.http.get<Doctor[]>(this.doctorsUrl);
   }
@@ -43,7 +45,7 @@ export class DoctorService {
   }
 
   partialUpdate(doctor: Doctor, doctorFirstName: string, doctorLastName: string, doctorEmail: string,
-                doctorTelephone: string, doctorSpecialization: string, doctorDescription: string): Observable<Doctor> {
+                doctorTelephone: string, doctorUsername: string, doctorSpecialization: string, doctorDescription: string): Observable<Doctor> {
     const id = doctor.id;
     const url = `${this.doctorsUrl}/${id}`;
     const changes: {[id: string]: string | Appointment[];} = {};
@@ -58,6 +60,9 @@ export class DoctorService {
     }
     if (doctorTelephone != "") {
       changes["telephone"] = doctorTelephone;
+    }
+    if (doctorUsername != "") {
+      changes["username"] = doctorUsername;
     }
     if (doctorSpecialization != "") {
       changes["specialization"] = doctorSpecialization;

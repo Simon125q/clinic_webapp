@@ -93,6 +93,9 @@ export class ManageDoctorsComponent implements OnInit {
       else if (doc.telephone.toLowerCase().includes(this.searchPhrase.trim().toLowerCase())) {
         this.filteredDoctorList.push(doc)
       }
+      else if (doc.username.toLowerCase().includes(this.searchPhrase.trim().toLowerCase())) {
+        this.filteredDoctorList.push(doc)
+      }
       else if (doc.specialization.toLowerCase().includes(this.searchPhrase.trim().toLowerCase())) {
         this.filteredDoctorList.push(doc)
       }
@@ -123,7 +126,7 @@ export class ManageDoctorsComponent implements OnInit {
   updateSelected(): void {
     if (this.displayDoctor != undefined && this.selectedDoctor != undefined) {
       this.update(this.displayDoctor.firstName, this.displayDoctor.lastName, this.displayDoctor.email,
-        this.displayDoctor.telephone, this.displayDoctor.specialization, this.displayDoctor.description, this.selectedDoctor);
+        this.displayDoctor.telephone, this.displayDoctor.username, this.displayDoctor.specialization, this.displayDoctor.description, this.selectedDoctor);
     }
     this.hideDetail();
   }
@@ -146,14 +149,15 @@ export class ManageDoctorsComponent implements OnInit {
   }
 
   add(firstName: string, lastName: string, email: string,
-      telephone: string, specialization: string, description: string): void {
+      telephone: string, username: string, specialization: string, description: string): void {
     firstName = firstName.trim();
     lastName = lastName.trim();
     email = email.trim();
     telephone = telephone.trim();
+    username = username.trim();
     specialization = specialization.trim();
     description = description.trim();
-    this.doctorService.addDoctor({firstName, lastName, email, telephone, specialization, description} as Doctor)
+    this.doctorService.addDoctor({firstName, lastName, email, telephone, username, specialization, description} as Doctor)
       .subscribe({
         next: (doctor: Doctor) => {this.doctorList?.push(doctor)},
         error: () => {},
@@ -187,18 +191,19 @@ export class ManageDoctorsComponent implements OnInit {
     });
   }
 
-  update(firstName: string, lastName: string, email: string, telephone: string,
+  update(firstName: string, lastName: string, email: string, telephone: string, username: string,
          specialization: string, description: string, chosenToUpdateDoctor: Doctor): void {
     let id = chosenToUpdateDoctor.id;
     firstName = firstName.trim();
     lastName = lastName.trim();
     email = email.trim();
     telephone = telephone.trim();
+    username = username.trim();
     specialization = specialization.trim();
     description = description.trim();
     console.log(id);
     if (id != undefined) {
-      this.doctorService.updateDoctor({firstName, lastName, email, telephone, specialization, description} as Doctor, id)
+      this.doctorService.updateDoctor({firstName, lastName, email, telephone, username, specialization, description} as Doctor, id)
         .subscribe({
           next: (doctor: Doctor) => {
             if (this.doctorList != undefined) {
@@ -219,16 +224,17 @@ export class ManageDoctorsComponent implements OnInit {
     }
   }
   partialUpdate(doctor: Doctor, firstName: string, lastName: string, email: string,
-                telephone: string, specialization: string, description: string): void {
+                telephone: string, username: string, specialization: string, description: string): void {
     firstName = firstName.trim();
     lastName = lastName.trim();
     email = email.trim();
     telephone = telephone.trim();
+    username = username.trim();
     specialization = specialization.trim();
     description = description.trim();
     console.log(doctor.id);
     if (doctor.id != undefined) {
-      this.doctorService.partialUpdate(doctor, firstName, lastName, email, telephone, specialization, description)
+      this.doctorService.partialUpdate(doctor, firstName, lastName, email, telephone, username, specialization, description)
         .subscribe({
           next: (updatedDoctor: Doctor) => {
             if (this.doctorList != undefined) {

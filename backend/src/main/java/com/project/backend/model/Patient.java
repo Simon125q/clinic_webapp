@@ -17,12 +17,9 @@ public class Patient {
     private String lastName;
     private String email;
     private String telephone;
+    private String username;
     private boolean isDeleted = false;
 
-//    @OneToOne
-//    @JoinColumn(name = "patient_id")
-//    @JsonBackReference(value = "patient-user")
-//    private User userAccount;
 
     @OneToMany(mappedBy = "patient")
     @JsonManagedReference(value = "patient-appointment")
@@ -84,12 +81,11 @@ public class Patient {
         isDeleted = deleted;
     }
 
-//    public User getUserAccount() {
-//        return userAccount;
-//    }
-//
-//    public void setUserAccount(User userAccount) {
-//        this.userAccount = userAccount;
-//    }
+    public String getUsername() {
+        return username;
+    }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }

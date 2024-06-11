@@ -2,8 +2,10 @@ package com.project.backend.controllers;
 
 import com.project.backend.model.Appointment;
 import com.project.backend.model.Doctor;
+import com.project.backend.model.User;
 import com.project.backend.repository.AppointmentRepository;
 import com.project.backend.repository.DoctorRepository;
+import com.project.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -18,12 +21,15 @@ import java.util.Map;
 public class DoctorRESTController {
     private final DoctorRepository doctorRepository;
     private final AppointmentRepository appointmentRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public DoctorRESTController(DoctorRepository doctorRepository,
-                                AppointmentRepository appointmentRepository) {
+                                AppointmentRepository appointmentRepository,
+                                UserRepository userRepository) {
         this.doctorRepository = doctorRepository;
         this.appointmentRepository = appointmentRepository;
+        this.userRepository = userRepository;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -110,6 +116,9 @@ public class DoctorRESTController {
         }
         if (updates.containsKey("telephone")) {
             doctor.setTelephone((String) updates.get("telephone"));
+        }
+        if (updates.containsKey("username")) {
+            doctor.setUsername((String) updates.get("username"));
         }
         if (updates.containsKey("specialization")) {
             doctor.setSpecialization((String) updates.get("specialization"));

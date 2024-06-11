@@ -6,16 +6,18 @@ export class Doctor {
   lastName: string;
   email: string;
   telephone: string;
+  username: string;
   specialization: string;
   description: string;
   appointmentList: Appointment[];
 
   constructor(firstName: string, lastName: string, email: string,
-              telephone: string, specialization: string, description: string, appointmentList: Appointment[]) {
+              telephone: string, username: string, specialization: string, description: string, appointmentList: Appointment[]) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.telephone = telephone;
+    this.username = username;
     this.specialization = specialization;
     this.description = description;
     this.appointmentList = appointmentList;

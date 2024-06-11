@@ -1,1 +1,77 @@
-<p>doctor works!</p>
+<div *ngIf="doctors != undefined && doctors.length > 0">
+  <button (click)="getDoctorData()">
+    Show My Data
+  </button>
+  <button (click)="showAppointments()">
+    Show My Appointments
+  </button>
+  <button (click)="newAppointment()">
+    New Appointment
+  </button>
+</div>
+<div class="details" *ngIf="displayDoctor != undefined && showingDoctorData">
+<label>Your Data</label>
+  <br>
+  <label>Firstname:
+    <input [(ngModel)]="displayDoctor.firstName">
+  </label>
+  <br>
+  <label>Lastname:
+    <input [(ngModel)]="displayDoctor.lastName">
+  </label>
+  <br>
+  <label>Username:
+  <input [(ngModel)]="displayDoctor.username">
+  </label>
+  <br>
+  <label>Email:
+    <input [(ngModel)]="displayDoctor.email">
+  </label>
+  <br>
+  <label>Phone Number:
+    <input [(ngModel)]="displayDoctor.telephone">
+  </label>
+  <br>
+  <label>Specialization:
+    <input [(ngModel)]="displayDoctor.specialization">
+  </label>
+  <br>
+  <label>Description:
+    <input [(ngModel)]="displayDoctor.description">
+  </label>
+  <br>
+  <button (click)="updateSelected()">Update</button>
+</div>
+<div *ngIf="showingAppointments && displayDoctor != undefined">
+  <ul>
+    <li *ngFor="let appointment of displayDoctor.appointmentList">
+      <label>Date: {{appointment.date}}</label><br>
+      <label>Time: {{appointment.time}}</label><br>
+      <label>Prescription:
+        <input value = "{{appointment.prescription.recommendation}}"></label>
+
+      <button (click)="addPrescription(appointment.id, appointment.prescription.recommendation)">
+        Add prescription
+      </button>
+    </li>
+  </ul>
+</div>
+<div *ngIf="addingNewAppointment">
+  <label>Date:
+    <input #appDate>
+  </label>
+  <br>
+  <label>Time:
+    <input #appTime>
+  </label>
+  <br>
+  <label>Patient id:
+    <input #appPatient>
+  </label>
+  <br>
+  <button (click)="addAppointment(appDate.value, appTime.value, appPatient.value);
+                    appDate.value = ''; appTime.value = ''; appPatient.value = '';">
+    Add
+  </button>
+</div>
+

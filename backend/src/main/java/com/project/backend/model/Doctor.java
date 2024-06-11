@@ -18,13 +18,9 @@ public class Doctor {
     private String lastName;
     private String email;
     private String telephone;
+    private String username;
     private String specialization;
     private String description;
-
-//    @OneToOne
-//    @JoinColumn(name = "doctor_id")
-//    @JsonBackReference(value = "doctor-user")
-//    private User userAccount;
 
     @OneToMany(mappedBy = "doctor")
     @JsonManagedReference(value = "doctor-appointment")
@@ -94,11 +90,11 @@ public class Doctor {
         this.appointmentList = appointmentList;
     }
 
-//    public User getUserAccount() {
-//        return userAccount;
-//    }
-//
-//    public void setUserAccount(User userAccount) {
-//        this.userAccount = userAccount;
-//    }
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }
