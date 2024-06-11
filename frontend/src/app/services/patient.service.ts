@@ -42,7 +42,7 @@ export class PatientService {
   }
 
   partialUpdate(patient: Patient, patientFirstName: string, patientLastName: string, patientEmail: string,
-                patientTelephone: string): Observable<Patient> {
+                patientTelephone: string, patientUsername: string): Observable<Patient> {
     const id = patient.id;
     const url = `${this.patientsUrl}/${id}`;
     const changes: {[id: string]: string;} = {};
@@ -57,6 +57,9 @@ export class PatientService {
     }
     if (patientTelephone != "") {
       changes["telephone"] = patientTelephone;
+    }
+    if (patientUsername != "") {
+      changes["username"] = patientUsername;
     }
 
     return this.http.patch<Patient>(url, changes, httpOptions).pipe(

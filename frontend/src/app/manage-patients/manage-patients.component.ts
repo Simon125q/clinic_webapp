@@ -86,6 +86,9 @@ export class ManagePatientsComponent implements OnInit {
       else if (doc.telephone.toLowerCase().includes(this.searchPhrase.trim().toLowerCase())) {
         this.filteredPatientList.push(doc)
       }
+      else if (doc.username.toLowerCase().includes(this.searchPhrase.trim().toLowerCase())) {
+        this.filteredPatientList.push(doc);
+      }
     }
   }
 
@@ -110,7 +113,7 @@ export class ManagePatientsComponent implements OnInit {
   updateSelected(): void {
     if (this.displayPatient != undefined && this.selectedPatient != undefined) {
       this.update(this.displayPatient.firstName, this.displayPatient.lastName, this.displayPatient.email,
-        this.displayPatient.telephone, this.selectedPatient);
+        this.displayPatient.telephone, this.displayPatient.username, this.selectedPatient);
     }
     this.hideDetail();
   }
@@ -128,12 +131,13 @@ export class ManagePatientsComponent implements OnInit {
   }
 
   add(firstName: string, lastName: string, email: string,
-      telephone: string): void {
+      telephone: string, username: string): void {
     firstName = firstName.trim();
     lastName = lastName.trim();
     email = email.trim();
     telephone = telephone.trim();
-    this.patientService.addPatient({firstName, lastName, email, telephone} as Patient)
+    username = username.trim();
+    this.patientService.addPatient({firstName, lastName, email, telephone, username} as Patient)
       .subscribe({
         next: (patient: Patient) => {this.patientList?.push(patient)},
         error: () => {},
@@ -164,16 +168,18 @@ export class ManagePatientsComponent implements OnInit {
     });
   }
 
-  update(firstName: string, lastName: string, email: string, telephone: string, chosenToUpdatePatient: Patient): void {
+  update(firstName: string, lastName: string, email: string, telephone: string,
+         username: string, chosenToUpdatePatient: Patient): void {
     let id = chosenToUpdatePatient.id;
     firstName = firstName.trim();
     lastName = lastName.trim();
     email = email.trim();
     telephone = telephone.trim();
+    username = username.trim();
 
     console.log(id);
     if (id != undefined) {
-      this.patientService.updatePatient({firstName, lastName, email, telephone} as Patient, id)
+      this.patientService.updatePatient({firstName, lastName, email, telephone, username} as Patient, id)
         .subscribe({
           next: (patient: Patient) => {
             if (this.patientList != undefined) {
@@ -193,14 +199,15 @@ export class ManagePatientsComponent implements OnInit {
     }
   }
   partialUpdate(patient: Patient, firstName: string, lastName: string, email: string,
-                telephone: string): void {
+                telephone: string, username: string): void {
     firstName = firstName.trim();
     lastName = lastName.trim();
     email = email.trim();
     telephone = telephone.trim();
+    username = username.trim();
     console.log(patient.id);
     if (patient.id != undefined) {
-      this.patientService.partialUpdate(patient, firstName, lastName, email, telephone)
+      this.patientService.partialUpdate(patient, firstName, lastName, email, telephone, username)
         .subscribe({
           next: (updatedPatient: Patient) => {
             if (this.patientList != undefined) {

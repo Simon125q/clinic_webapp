@@ -54,6 +54,10 @@
     <input [(ngModel)]="displayPatient.lastName">
   </label>
   <br>
+  <label>Username:
+    <input [(ngModel)]="displayPatient.username">
+  </label>
+  <br>
   <label>Email:
     <input [(ngModel)]="displayPatient.email">
   </label>
@@ -90,6 +94,10 @@
     <input #docLastname>
   </label>
   <br>
+  <label>Username:
+    <input #docUsername>
+  </label>
+  <br>
   <label>Email:
     <input #docEmail>
   </label>
@@ -99,8 +107,8 @@
   </label>
   <br>
   <button (click)='add(docFirstname.value, docLastname.value, docEmail.value,
-          docTelephone.value);
+          docTelephone.value, docUsername.value);
           docFirstname.value = ""; docLastname.value = ""; docEmail.value = "";
-          docTelephone.value = "";'
+          docTelephone.value = ""; docUsername.value = "";'
   >Add</button>
 </div>

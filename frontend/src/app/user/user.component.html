@@ -1,1 +1,42 @@
-<p>user works!</p>
+<div *ngIf="patients != undefined && patients.length > 0">
+  <button (click)="getPatientData()">
+    Show My Data
+  </button>
+  <button (click)="showAppointments()">
+    Show My Appointments
+  </button>
+</div>
+<div class="details" *ngIf="displayPatient != undefined && showingPatientData">
+  <label>Your Data</label>
+  <br>
+  <label>Firstname:
+    <input [(ngModel)]="displayPatient.firstName">
+  </label>
+  <br>
+  <label>Lastname:
+    <input [(ngModel)]="displayPatient.lastName">
+  </label>
+  <br>
+  <label>Username:
+    <input [(ngModel)]="displayPatient.username">
+  </label>
+  <br>
+  <label>Email:
+    <input [(ngModel)]="displayPatient.email">
+  </label>
+  <br>
+  <label>Phone Number:
+    <input [(ngModel)]="displayPatient.telephone">
+  </label>
+  <br>
+  <button (click)="updateSelected()">Update</button>
+</div>
+<div *ngIf="showingAppointments && displayPatient != undefined">
+  <ul>
+    <li *ngFor="let appointment of displayPatient.appointmentList">
+      <label>Date: {{appointment.date}}</label><br>
+      <label>Time: {{appointment.time}}</label><br>
+      <label>Prescription: {{appointment.prescription.recommendation}}</label>
+    </li>
+  </ul>
+</div>
