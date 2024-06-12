@@ -52,6 +52,7 @@ export class DoctorComponent implements OnInit {
     this.showingDoctorData = false;
     this.addingNewAppointment = false;
     this.getDoctorByUsername();
+    this.getAppointmentsPatients();
   }
 
   newAppointment(): void {
@@ -78,6 +79,18 @@ export class DoctorComponent implements OnInit {
         .subscribe(pres => appointment.prescription = pres);
 
       this.appointmentService.updateAppointment(appointment, appointmentId)
+    }
+  }
+
+  getAppointmentsPatients(): void {
+    if (this.displayDoctor == undefined) {
+      return;
+    }
+    for (let appointment of this.displayDoctor.appointmentList) {
+      if (appointment.id != undefined) {
+        this.appointmentService.getAppointmentsPatient(appointment.id)
+          .subscribe(patient => appointment.patient = patient);
+      }
     }
   }
 

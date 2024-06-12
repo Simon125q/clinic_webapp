@@ -4,6 +4,7 @@ import {PatientService} from "../services/patient.service";
 import {NgForOf, NgIf} from "@angular/common";
 import {RouterLink} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {AppointmentService} from "../services/appointment.service";
 
 @Component({
   selector: 'app-manage-patients',
@@ -26,7 +27,8 @@ export class ManagePatientsComponent implements OnInit {
   patient?: Patient;
   displayPatient?: Patient;
   selectedPatient?: Patient;
-  constructor(private patientService: PatientService) {
+  constructor(private patientService: PatientService,
+              private appointmentService: AppointmentService) {
   }
 
   ngOnInit() {
@@ -101,6 +103,7 @@ export class ManagePatientsComponent implements OnInit {
     this.addingNew = false;
     this.displayPatient = patient;
     this.selectedPatient = patient;
+    this.getAppointmentsDoctors();
   }
 
   deleteSelected(): void {
@@ -128,6 +131,18 @@ export class ManagePatientsComponent implements OnInit {
       .subscribe(patientList => this.patientList = patientList);
     console.log("patients");
     console.log(this.patientList);
+  }
+
+  getAppointmentsDoctors():void {
+    if (this.displayPatient== undefined) {
+      return;
+    }
+    for (let appointment of this.displayPatient.appointmentList) {
+      if (appointment.id != undefined) {
+        this.appointmentService.getAppointmentsDoctor(appointment.id)
+          .subscribe(doctor=> appointment.doctor = doctor);
+      }
+    }
   }
 
   add(firstName: string, lastName: string, email: string,

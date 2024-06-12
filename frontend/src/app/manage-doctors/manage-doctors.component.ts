@@ -8,6 +8,7 @@ import {of} from "rxjs";
 import {FormsModule} from "@angular/forms";
 import {Appointment} from "../models/appointment.model";
 import {AppointmentService} from "../services/appointment.service";
+import {Patient} from "../models/patient.model";
 
 @Component({
   selector: 'app-manage-doctors',
@@ -30,7 +31,8 @@ export class ManageDoctorsComponent implements OnInit {
   displayDoctor?: Doctor;
   selectedDoctor?: Doctor;
 
-  constructor(private doctorService: DoctorService) {
+  constructor(private doctorService: DoctorService,
+              private appointmentService: AppointmentService) {
   }
 
   ngOnInit() {
@@ -114,6 +116,7 @@ export class ManageDoctorsComponent implements OnInit {
     this.addingNew = false;
     this.displayDoctor = doctor;
     this.selectedDoctor = doctor;
+    this.getAppointmentsPatients();
   }
 
   deleteSelected(): void {
@@ -146,6 +149,18 @@ export class ManageDoctorsComponent implements OnInit {
     }
     console.log("doctors");
     console.log(this.doctorList);
+  }
+
+  getAppointmentsPatients():void {
+    if (this.displayDoctor == undefined) {
+      return;
+    }
+    for (let appointment of this.displayDoctor.appointmentList) {
+      if (appointment.id != undefined) {
+        this.appointmentService.getAppointmentsPatient(appointment.id)
+          .subscribe(patient => appointment.patient = patient);
+      }
+    }
   }
 
   add(firstName: string, lastName: string, email: string,

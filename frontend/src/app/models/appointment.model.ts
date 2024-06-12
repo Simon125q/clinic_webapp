@@ -1,4 +1,6 @@
 import {Prescription} from "./prescription.model";
+import {Doctor} from "./doctor.model";
+import {Patient} from "./patient.model";
 
 export class Appointment {
 
@@ -6,6 +8,8 @@ export class Appointment {
   date: string;
   time: string;
   prescription: Prescription;
+  doctor?: Doctor;
+  patient?: Patient;
 
   constructor(date: string, time: string, prescription: Prescription) {
     this.date = date;

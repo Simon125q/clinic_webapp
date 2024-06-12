@@ -51,8 +51,16 @@
     <input [(ngModel)]="displayAppointment.time">
   </label>
   <br>
-  <label>Prescription:
-    <input [(ngModel)]="displayAppointment.prescription.recommendation">
+  <label *ngIf="appointmentDoctor != undefined">
+    Doctor: {{appointmentDoctor.firstName}} {{appointmentDoctor.lastName}}
+  </label>
+  <br>
+  <label *ngIf="appointmentPatient != undefined">
+    Patient : {{appointmentPatient.firstName}} {{appointmentPatient.lastName}}
+  </label>
+  <br>
+  <label>
+    Prescription: {{displayAppointment.prescription.recommendation}}
   </label>
   <br>
   <button (click)="updateSelected()">Update</button>
@@ -67,6 +75,14 @@
   <br>
   <label>Time:
     <input #appointmentTime>
+  </label>
+  <br>
+  <label>Doctor id:
+    <input #appointmentDoctorId>
+  </label>
+  <br>
+  <label>Patient id:
+    <input #appointmentPatientId>
   </label>
   <br>
   <button (click)='add(appointmentDate.value, appointmentTime.value);

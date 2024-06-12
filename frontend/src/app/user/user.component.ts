@@ -4,6 +4,7 @@ import {TokenStorageService} from "../auth/token-storage.service";
 import {Patient} from "../models/patient.model";
 import {NgForOf, NgIf} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {AppointmentService} from "../services/appointment.service";
 
 @Component({
   selector: 'app-user',
@@ -26,7 +27,8 @@ export class UserComponent implements OnInit {
   showingPatientData: boolean = false;
 
   constructor(private patientService: PatientService,
-              private tokenService: TokenStorageService) {
+              private tokenService: TokenStorageService,
+              private appointmentService: AppointmentService) {
   }
 
   ngOnInit(): void {
@@ -43,11 +45,24 @@ export class UserComponent implements OnInit {
     this.showingAppointments = true;
     this.showingPatientData = false;
     this.getPatientByUsername();
+    this.getAppointmentsDoctor();
   }
 
   newAppointment(): void {
     this.showingAppointments = false;
     this.showingPatientData = false;
+  }
+
+  getAppointmentsDoctor(): void {
+    if (this.displayPatient== undefined) {
+      return;
+    }
+    for (let appointment of this.displayPatient.appointmentList) {
+      if (appointment.id != undefined) {
+        this.appointmentService.getAppointmentsDoctor(appointment.id)
+          .subscribe(doctor => appointment.doctor = doctor);
+      }
+    }
   }
 
   getPatient(): void {

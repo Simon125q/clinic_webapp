@@ -6,6 +6,10 @@ import {RouterLink} from "@angular/router";
 import {NgForOf, NgIf} from "@angular/common";
 import {of} from "rxjs";
 import {FormsModule} from "@angular/forms";
+import {Doctor} from "../models/doctor.model";
+import {Patient} from "../models/patient.model";
+import {DoctorService} from "../services/doctor.service";
+import {PatientService} from "../services/patient.service";
 
 @Component({
   selector: 'app-manage-appointments',
@@ -27,8 +31,12 @@ export class ManageAppointmentsComponent implements OnInit {
   appointment?: Appointment;
   displayAppointment?: Appointment;
   selectedAppointment?: Appointment;
+  appointmentDoctor?: Doctor;
+  appointmentPatient?: Patient;
 
-  constructor(private appointmentService: AppointmentService) {
+  constructor(private appointmentService: AppointmentService,
+              private doctorService: DoctorService,
+              private  patientService: PatientService) {
   }
 
   ngOnInit() {
@@ -88,6 +96,16 @@ export class ManageAppointmentsComponent implements OnInit {
     this.addingNew = false;
     this.displayAppointment = appointment;
     this.selectedAppointment = appointment;
+    this.getAppointmentParticipants();
+  }
+
+  getAppointmentParticipants(): void {
+    if (this.selectedAppointment?.id != undefined) {
+      this.appointmentService.getAppointmentsDoctor(this.selectedAppointment.id)
+        .subscribe(doctor => this.appointmentDoctor = doctor);
+      this.appointmentService.getAppointmentsPatient(this.selectedAppointment.id)
+        .subscribe(patient => this.appointmentPatient = patient);
+    }
   }
 
   deleteSelected(): void {

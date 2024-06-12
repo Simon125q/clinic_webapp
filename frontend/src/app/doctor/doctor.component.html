@@ -47,6 +47,7 @@
     <li *ngFor="let appointment of displayDoctor.appointmentList">
       <label>Date: {{appointment.date}}</label><br>
       <label>Time: {{appointment.time}}</label><br>
+      <label>Patient: {{appointment.patient?.firstName}} {{appointment.patient?.lastName}}</label><br>
       <label>Prescription:
         <input value = "{{appointment.prescription.recommendation}}"></label>
 

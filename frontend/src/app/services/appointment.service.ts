@@ -2,6 +2,8 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {BehaviorSubject, catchError, Observable, of, tap} from "rxjs";
 import {Appointment} from "../models/appointment.model";
+import {Doctor} from "../models/doctor.model";
+import {Patient} from "../models/patient.model";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': "application/json"})
@@ -24,6 +26,22 @@ export class AppointmentService {
     return this.http.get<Appointment>(url).pipe(
       tap(_ => this.log(`fetched appointment id=${id}`)),
       catchError(this.handleError<Appointment>(`getAppointment id=${id}`))
+    );
+  }
+
+  getAppointmentsDoctor(id: number): Observable<Doctor> {
+    const url = `${this.appointmentsUrl}/d${id}`;
+    return this.http.get<Doctor>(url).pipe(
+      tap(_ => this.log(`fetched doctor for appointment id=${id}`)),
+      catchError(this.handleError<Doctor>(`getAppointmentsDoctor id=${id}`))
+    );
+  }
+
+  getAppointmentsPatient(id: number): Observable<Patient> {
+    const url = `${this.appointmentsUrl}/p${id}`;
+    return this.http.get<Patient>(url).pipe(
+      tap(_ => this.log(`fetched patient for appointment id=${id}`)),
+      catchError(this.handleError<Patient>(`getAppointmentsPatient id=${id}`))
     );
   }
 

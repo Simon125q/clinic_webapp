@@ -1,7 +1,10 @@
 package com.project.backend.controllers;
 
 import com.project.backend.model.Appointment;
+import com.project.backend.model.Doctor;
+import com.project.backend.model.Patient;
 import com.project.backend.repository.AppointmentRepository;
+import com.project.backend.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +18,13 @@ import java.util.Map;
 @RequestMapping("/appointments")
 public class AppointmentRESTController {
     private final AppointmentRepository appointmentRepository;
+    private final DoctorRepository doctorRepository;
 
     @Autowired
-    public AppointmentRESTController(AppointmentRepository appointmentRepository) {
+    public AppointmentRESTController(AppointmentRepository appointmentRepository,
+                                     DoctorRepository doctorRepository) {
         this.appointmentRepository = appointmentRepository;
+        this.doctorRepository = doctorRepository;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -28,6 +34,21 @@ public class AppointmentRESTController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Appointment findAppointment(@PathVariable("id") long id) {
         return appointmentRepository.findById(id);
+    }
+
+    @RequestMapping(value = "/d{id}", method = RequestMethod.GET)
+    public Doctor findAppointmentsDoctor(@PathVariable("id") long id) {
+        return this.appointmentRepository.findById(id).getDoctor();
+//        for (Doctor doc : this.doctorRepository.findAll()) {
+//            for (Appointment appointment : doc.getAppointmentList()) {
+//                if (appointment.id)
+//            }
+//        }
+    }
+
+    @RequestMapping(value = "/p{id}", method = RequestMethod.GET)
+    public Patient findAppointmentsPatient(@PathVariable("id") long id) {
+        return this.appointmentRepository.findById(id).getPatient();
     }
 
     @RequestMapping(method = RequestMethod.POST)
