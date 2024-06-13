@@ -9,6 +9,8 @@ import {FormsModule} from "@angular/forms";
 import {Appointment} from "../models/appointment.model";
 import {AppointmentService} from "../services/appointment.service";
 import {Patient} from "../models/patient.model";
+import {AuthService} from "../auth/auth.service";
+import {SignupInfo} from "../auth/signup-info";
 
 @Component({
   selector: 'app-manage-doctors',
@@ -32,7 +34,8 @@ export class ManageDoctorsComponent implements OnInit {
   selectedDoctor?: Doctor;
 
   constructor(private doctorService: DoctorService,
-              private appointmentService: AppointmentService) {
+              private appointmentService: AppointmentService,
+              private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -164,14 +167,18 @@ export class ManageDoctorsComponent implements OnInit {
   }
 
   add(firstName: string, lastName: string, email: string,
-      telephone: string, username: string, specialization: string, description: string): void {
+      telephone: string, username: string, password: string,
+      specialization: string, description: string): void {
     firstName = firstName.trim();
     lastName = lastName.trim();
     email = email.trim();
     telephone = telephone.trim();
     username = username.trim();
+    password = password.trim();
     specialization = specialization.trim();
     description = description.trim();
+    let role: string = "doctor";
+    let signupInfo = new SignupInfo(username, password, role);
     this.doctorService.addDoctor({firstName, lastName, email, telephone, username, specialization, description} as Doctor)
       .subscribe({
         next: (doctor: Doctor) => {this.doctorList?.push(doctor)},
@@ -184,6 +191,19 @@ export class ManageDoctorsComponent implements OnInit {
           }
         }
       });
+    this.authService.signUp(signupInfo).subscribe({
+        next: (data) =>
+      {
+        console.log(data);
+      }
+        ,
+        error: (error) => {
+        console.log(error);
+      },
+        complete: () => {
+      }
+    }
+    );
   }
 
   delete(doctor: Doctor): void {

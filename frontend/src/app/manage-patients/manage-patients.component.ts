@@ -8,6 +8,7 @@ import {AppointmentService} from "../services/appointment.service";
 import {Doctor} from "../models/doctor.model";
 import {DoctorService} from "../services/doctor.service";
 import {AuthService} from "../auth/auth.service";
+import {SignupInfo} from "../auth/signup-info";
 
 @Component({
   selector: 'app-manage-patients',
@@ -178,17 +179,32 @@ export class ManagePatientsComponent implements OnInit {
   }
 
   add(firstName: string, lastName: string, email: string,
-      telephone: string, username: string): void {
+      telephone: string, username: string, password: string): void {
     firstName = firstName.trim();
     lastName = lastName.trim();
     email = email.trim();
     telephone = telephone.trim();
     username = username.trim();
+    password = password.trim();
+    let signupInfo = new SignupInfo(username, password, "patient");
+    this.authService.signUp(signupInfo).subscribe({
+      next: (data) =>
+      {
+        console.log(data);
+      }
+      ,
+      error: (error) => {
+        console.log(error);
+      },
+      complete: () => {
+      }
+    });
     this.patientService.addPatient({firstName, lastName, email, telephone, username} as Patient)
       .subscribe({
         next: (patient: Patient) => {this.patientList?.push(patient)},
         error: () => {},
         complete: () => {
+          this.authService.signUp({username, password} as SignupInfo);
           if (this.patientList != undefined) {
             this.patientService.totalItems.next(this.patientList.length);
             console.log(this.patientList.length)

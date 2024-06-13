@@ -3,9 +3,12 @@ export class SignupInfo {
     role: string[];
     password: string;
 
-    constructor(username: string, password: string) {
-        this.username = username;
-        this.role = ['patient'];
-        this.password = password;
+  constructor(username: string, password: string, role: string) {
+    this.username = username;
+    this.role = ['patient'];
+    if (role.trim() === "doctor" || role.trim() === "admin") {
+      this.role = [role];
     }
+    this.password = password;
+  }
 }
