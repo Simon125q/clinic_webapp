@@ -5,6 +5,9 @@ import {NgForOf, NgIf} from "@angular/common";
 import {RouterLink} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AppointmentService} from "../services/appointment.service";
+import {Doctor} from "../models/doctor.model";
+import {DoctorService} from "../services/doctor.service";
+import {AuthService} from "../auth/auth.service";
 
 @Component({
   selector: 'app-manage-patients',
@@ -28,7 +31,9 @@ export class ManagePatientsComponent implements OnInit {
   displayPatient?: Patient;
   selectedPatient?: Patient;
   constructor(private patientService: PatientService,
-              private appointmentService: AppointmentService) {
+              private appointmentService: AppointmentService,
+              private doctorService: DoctorService,
+              private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -106,9 +111,19 @@ export class ManagePatientsComponent implements OnInit {
     this.getAppointmentsDoctors();
   }
 
+  changeSelectedToDoctor(): void {
+    if (this.selectedPatient != undefined){
+      this.addDoctor(this.selectedPatient.firstName, this.selectedPatient.lastName, this.selectedPatient.email,
+        this.selectedPatient.telephone, this.selectedPatient.username, "", "");
+      this.authService.partialUpdate(this.selectedPatient.username, "", "", ["doctor"]);
+      this.delete(this.selectedPatient);
+    }
+    this.hideDetail();
+  }
+
   deleteSelected(): void {
-    if (this.displayPatient != undefined){
-      this.delete(this.displayPatient);
+    if (this.selectedPatient!= undefined){
+      this.delete(this.selectedPatient);
     }
     this.hideDetail();
   }
@@ -143,6 +158,23 @@ export class ManagePatientsComponent implements OnInit {
           .subscribe(doctor=> appointment.doctor = doctor);
       }
     }
+  }
+
+  addDoctor(firstName: string, lastName: string, email: string,
+      telephone: string, username: string, specialization: string, description: string): void {
+    firstName = firstName.trim();
+    lastName = lastName.trim();
+    email = email.trim();
+    telephone = telephone.trim();
+    username = username.trim();
+    specialization = specialization.trim();
+    description = description.trim();
+    this.doctorService.addDoctor({firstName, lastName, email, telephone, username, specialization, description} as Doctor)
+      .subscribe({
+        next: (doctor: Doctor) => {},
+        error: () => {},
+        complete: () => {}
+      });
   }
 
   add(firstName: string, lastName: string, email: string,

@@ -5,6 +5,8 @@ import {catchError, Observable, of, tap} from "rxjs";
 import {JwtResponse} from "./jwt-response";
 import {SignupInfo} from "./signup-info";
 import {Patient} from "../models/patient.model";
+import {Doctor} from "../models/doctor.model";
+import {Appointment} from "../models/appointment.model";
 
 const httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -36,6 +38,22 @@ export class AuthService {
         catchError(this.handleError<Patient>('addPatient'))
       );
     }
+
+  partialUpdate(oldUsername: string, userUsername: string, userPassword: string, userRoles: string[]): void {
+    const url = `http://localhost:8080/auth/${oldUsername}`;
+    const changes: {[id: string]: string | string[];} = {};
+    if (userUsername != "") {
+      changes["username"] = userUsername;
+    }
+    if (userPassword != "") {
+      changes["password"] = userPassword;
+    }
+    if (userRoles.length != 0) {
+      changes["role"] = userRoles;
+    }
+
+    this.http.patch(url, changes, httpOptions);
+  }
 
   private handleError<T>(operation: string, result?: T) {
     return (error: any): Observable<T> => {

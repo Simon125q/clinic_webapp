@@ -23,7 +23,7 @@ public class PatientRESTController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Patient> findAllPatients() {
-        return patientRepository.findAll();
+        return patientRepository.findAll().stream().filter(patient -> !patient.isDeleted()).toList();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

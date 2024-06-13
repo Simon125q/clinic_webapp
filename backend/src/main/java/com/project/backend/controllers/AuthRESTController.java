@@ -24,8 +24,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
@@ -100,6 +99,52 @@ public class AuthRESTController {
 
         return new ResponseEntity<>(new ResponseMessage("User registered successfully."), HttpStatus.OK);
 
+    }
+
+    @PatchMapping("/{username}")
+    public ResponseEntity<User> updatePartOfPatient(@RequestBody Map<String, Object> updates, @PathVariable("username") String username) {
+        Optional<User> user = userRepository.findByUsername(username);
+        if (user.isEmpty()) {
+            System.out.println("User not found!");
+            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+        }
+        User newUser = partialUpdate(user.get(),updates);
+        return new ResponseEntity<User>(newUser, HttpStatus.OK);
+    }
+
+    private User partialUpdate(User user, Map<String, Object> updates) {
+        if (updates.containsKey("username")) {
+            user.setUsername((String) updates.get("firstname"));
+        }
+        if (updates.containsKey("password")) {
+            user.setPassword((String) updates.get("lastname"));
+        }
+        if (updates.containsKey("role")) {
+            List<String> strRoles = (List<String>) updates.get("role");
+            Set<Role> roles = new HashSet<>();
+
+            strRoles.forEach(role -> {
+                switch (role) {
+                    case "admin":
+                        Role adminRole = roleRepository.findByName(RoleName.ROLE_ADMIN)
+                                .orElseThrow(() -> new RuntimeException("Fail -> Cause: Admin Role not found."));
+                        roles.add(adminRole);
+                        break;
+                    case "doctor":
+                        Role doctorRole = roleRepository.findByName(RoleName.ROLE_DOCTOR)
+                                .orElseThrow(() -> new RuntimeException("Fail -> Cause: Doctor Role not found."));
+                        roles.add(doctorRole);
+                        break;
+                    default:
+                        Role userRole = roleRepository.findByName(RoleName.ROLE_PATIENT)
+                                .orElseThrow(() -> new RuntimeException("Fail -> Cause: Patient Role not found."));
+                        roles.add(userRole);
+                }
+            });
+            user.setRoles(roles);
+        }
+        this.userRepository.save(user);
+        return user;
     }
 
     @PostMapping("/signup/patient")
