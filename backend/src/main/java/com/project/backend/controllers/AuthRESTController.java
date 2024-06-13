@@ -4,9 +4,11 @@ import com.project.backend.message.request.LoginForm;
 import com.project.backend.message.request.SignUpForm;
 import com.project.backend.message.response.JwtResponse;
 import com.project.backend.message.response.ResponseMessage;
+import com.project.backend.model.Patient;
 import com.project.backend.model.Role;
 import com.project.backend.model.RoleName;
 import com.project.backend.model.User;
+import com.project.backend.repository.PatientRepository;
 import com.project.backend.repository.RoleRepository;
 import com.project.backend.repository.UserRepository;
 import com.project.backend.security.jwt.JwtProvider;
@@ -35,15 +37,18 @@ public class AuthRESTController {
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
     private JwtProvider jwtProvider;
+    private PatientRepository patientRepository;
 
     @Autowired
     public AuthRESTController(DaoAuthenticationProvider daoAuthenticationProvider, UserRepository userRepository,
-                              RoleRepository roleRepository, PasswordEncoder passwordEncoder, JwtProvider jwtProvider) {
+                              RoleRepository roleRepository, PasswordEncoder passwordEncoder,
+                              JwtProvider jwtProvider, PatientRepository patientRepository) {
         this.daoAuthenticationProvider = daoAuthenticationProvider;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtProvider = jwtProvider;
+        this.patientRepository = patientRepository;
     }
 
     @PostMapping("/signin")
@@ -95,6 +100,12 @@ public class AuthRESTController {
 
         return new ResponseEntity<>(new ResponseMessage("User registered successfully."), HttpStatus.OK);
 
+    }
+
+    @PostMapping("/signup/patient")
+    public ResponseEntity<Patient> addPatient(@RequestBody Patient patient) {
+        patientRepository.save(patient);
+        return new ResponseEntity<Patient>(patient, HttpStatus.CREATED);
     }
 
 }

@@ -88,4 +88,13 @@ public class Patient {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "id='" + id + '\'' +
+                ", firstname='" + firstName + '\'' +
+                ", lastname='" + lastName + '\'' +
+                '}';
+    }
 }

@@ -24,6 +24,38 @@
           </div>
         </div>
         <div class="form-group">
+          <label for="firstname" id="firstname">Firstname</label>
+          <input type="text" class="form-control" name="firstname" [(ngModel)]="form.firstname" #firstname="ngModel"
+                 required />
+          <div *ngIf="f.submitted && firstname.invalid">
+            <div *ngIf="['username.errors?.required']">Firstname is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="lastname" id="lastname">Lastname</label>
+          <input type="text" class="form-control" name="lastname" [(ngModel)]="form.lastname" #lastname="ngModel"
+                 required />
+          <div *ngIf="f.submitted && lastname.invalid">
+            <div *ngIf="['username.errors?.required']">Lastname is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email" id="email">Email</label>
+          <input type="text" class="form-control" name="email" [(ngModel)]="form.email" #email="ngModel"
+                 required />
+          <div *ngIf="f.submitted && email.invalid">
+            <div *ngIf="['username.errors?.required']">Email is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="telephone" id="telephone">Telephone</label>
+          <input type="text" class="form-control" name="telephone" [(ngModel)]="form.telephone" #telephone="ngModel"
+                 required />
+          <div *ngIf="f.submitted && telephone.invalid">
+            <div *ngIf="['username.errors?.required']">Telephone is required</div>
+          </div>
+        </div>
+        <div class="form-group">
           <button class="btn btn-primary">Register</button>
           <div *ngIf="f.submitted && isSignUpFailed" class="alert alert-warning">
             Signup failed!<br/>{{errorMessage}}

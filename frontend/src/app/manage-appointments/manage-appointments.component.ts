@@ -139,21 +139,36 @@ export class ManageAppointmentsComponent implements OnInit {
     console.log(this.appointmentList);
   }
 
-  add(date: string, time: string): void {
+  add(date: string, time: string, patientId: string, doctorId: string): void {
     date = date.trim();
     time = time.trim();
+    let newAppointment: Appointment | undefined;
+    let patient_id = Number(patientId.trim());
+    let doctor_id = Number(doctorId.trim());
+    // let doctor: Doctor | undefined;
+    // let patient: Patient | undefined;
+    // this.doctorService.getDoctor(doctor_id)
+    //   .subscribe(doc => this.appointmentDoctor = doc);
+    // this.patientService.getPatient(patient_id)
+    //   .subscribe(pat => this.appointmentPatient = pat);
     this.appointmentService.addAppointment({date, time} as Appointment)
       .subscribe({
-        next: (appointment: Appointment) => {this.appointmentList?.push(appointment)},
+        next: (appointment: Appointment) => {this.selectedAppointment = appointment},
         error: () => {},
         complete: () => {
-          this.filteredAppointmentList = this.appointmentList;
+          if (this.selectedAppointment != undefined) {
+            this.appointmentList?.push(this.selectedAppointment);
+            this.filteredAppointmentList = this.appointmentList;
+          }
           if (this.appointmentList != undefined) {
             this.appointmentService.totalItems.next(this.appointmentList.length);
             console.log(this.appointmentList.length);
           }
         }
       });
+      if (this.selectedAppointment != undefined) {
+        this.partialUpdate(this.selectedAppointment, "", "", doctorId, patientId);
+      }
   }
 
   delete(appointment: Appointment): void {
@@ -202,12 +217,14 @@ export class ManageAppointmentsComponent implements OnInit {
         })
     }
   }
-  partialUpdate(appointment: Appointment, date: string, time: string): void {
+  partialUpdate(appointment: Appointment, date: string, time: string, doctorId: string, patientId: string): void {
     date = date.trim();
     time = time.trim();
+    let patient_id = Number(patientId.trim());
+    let doctor_id = Number(doctorId.trim());
     console.log(appointment.id);
     if (appointment.id != undefined) {
-      this.appointmentService.partialUpdate(appointment, date, time)
+      this.appointmentService.partialUpdate(appointment, date, time, doctor_id, patient_id)
         .subscribe({
           next: (updatedAppointment: Appointment) => {
             if (this.appointmentList != undefined) {

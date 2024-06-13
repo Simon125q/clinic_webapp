@@ -85,7 +85,7 @@
     <input #appointmentPatientId>
   </label>
   <br>
-  <button (click)='add(appointmentDate.value, appointmentTime.value);
-          appointmentDate.value = ""; appointmentTime.value = "";'
+  <button (click)='add(appointmentDate.value, appointmentTime.value, appointmentPatientId.value, appointmentDoctorId.value);
+          appointmentDate.value = ""; appointmentTime.value = ""; appointmentDoctorId.value = ""; appointmentPatientId.value = "";'
   >Add</button>
 </div>

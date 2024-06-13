@@ -5,6 +5,7 @@ import com.project.backend.model.Doctor;
 import com.project.backend.model.Patient;
 import com.project.backend.repository.AppointmentRepository;
 import com.project.backend.repository.DoctorRepository;
+import com.project.backend.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +20,15 @@ import java.util.Map;
 public class AppointmentRESTController {
     private final AppointmentRepository appointmentRepository;
     private final DoctorRepository doctorRepository;
+    private final PatientRepository patientRepository;
 
     @Autowired
     public AppointmentRESTController(AppointmentRepository appointmentRepository,
-                                     DoctorRepository doctorRepository) {
+                                     DoctorRepository doctorRepository,
+                                     PatientRepository patientRepository) {
         this.appointmentRepository = appointmentRepository;
         this.doctorRepository = doctorRepository;
+        this.patientRepository = patientRepository;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -101,7 +105,7 @@ public class AppointmentRESTController {
             return new ResponseEntity<Appointment>(HttpStatus.NOT_FOUND);
         }
         partialUpdate(appointment,updates);
-        return new ResponseEntity<Appointment>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<Appointment>(HttpStatus.OK);
     }
 
     private void partialUpdate(Appointment appointment, Map<String, Object> updates) {
@@ -110,6 +114,24 @@ public class AppointmentRESTController {
         }
         if (updates.containsKey("time")) {
             appointment.setTime((String) updates.get("time"));
+        }
+        if (updates.containsKey("doctor_id")) {
+            Doctor doctor = this.doctorRepository.findById((Integer) updates.get("doctor_id"));
+            List<Appointment> doctorAppointments = doctor.getAppointmentList();
+            doctorAppointments.add(appointment);
+            doctor.setAppointmentList(doctorAppointments);
+            doctorRepository.save(doctor);
+            System.out.println(doctor);
+            appointment.setDoctor(doctor);
+        }
+        if (updates.containsKey("patient_id")) {
+            Patient patient = this.patientRepository.findById((Integer) updates.get("patient_id"));
+            List<Appointment> patientAppointments = patient.getAppointmentList();
+            patientAppointments.add(appointment);
+            patient.setAppointmentList(patientAppointments);
+            patientRepository.save(patient);
+            System.out.println(patient);
+            appointment.setPatient(patient);
         }
 
         appointmentRepository.save(appointment);

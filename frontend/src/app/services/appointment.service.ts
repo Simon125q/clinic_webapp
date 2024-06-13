@@ -59,15 +59,21 @@ export class AppointmentService {
     );
   }
 
-  partialUpdate(appointment: Appointment, appointmentDate: string, appointmentTime: string): Observable<Appointment> {
+  partialUpdate(appointment: Appointment, appointmentDate: string, appointmentTime: string, doctor_id: number = -1, patient_id: number = -1): Observable<Appointment> {
     const id = appointment.id;
     const url = `${this.appointmentsUrl}/${id}`;
-    const changes: {[id: string]: string | Appointment[];} = {};
+    const changes: {[id: string]: string | number;} = {};
     if (appointmentDate!= "") {
       changes["date"] = appointmentDate;
     }
     if (appointmentTime!= "") {
       changes["time"] = appointmentTime;
+    }
+    if (doctor_id != -1) {
+      changes["doctor_id"] = doctor_id;
+    }
+    if (patient_id != -1) {
+      changes["patient_id"] = patient_id;
     }
 
     return this.http.patch<Appointment>(url, changes, httpOptions).pipe(
@@ -81,6 +87,14 @@ export class AppointmentService {
       tap((appointmentAdded: Appointment) => this.log(`added appointment id=${appointmentAdded.id}`)),
       catchError(this.handleError<Appointment>('addAppointment'))
     );
+  }
+
+  addAppointmentWithParticipants(appointment: Appointment, doctor_id: number, patient_id: number): Observable<Appointment> {
+    this.http.post<Appointment>(this.appointmentsUrl, appointment, httpOptions).pipe(
+      tap((appointmentAdded: Appointment) => this.log(`added appointment id=${appointmentAdded.id}`)),
+      catchError(this.handleError<Appointment>('addAppointment'))
+    ).subscribe(app => appointment = app);
+    return this.partialUpdate(appointment, "", "", doctor_id, patient_id);
   }
 
   deleteAppointment(appointment: Appointment | number): Observable<Appointment> {
