@@ -142,7 +142,6 @@ export class ManageAppointmentsComponent implements OnInit {
   add(date: string, time: string, patientId: string, doctorId: string): void {
     date = date.trim();
     time = time.trim();
-    let newAppointment: Appointment | undefined;
     let patient_id = Number(patientId.trim());
     let doctor_id = Number(doctorId.trim());
     let doctor: Doctor | undefined;

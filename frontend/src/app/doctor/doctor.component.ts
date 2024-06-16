@@ -8,6 +8,8 @@ import {PrescriptionService} from "../services/prescription.service";
 import {Prescription} from "../models/prescription.model";
 import {AppointmentService} from "../services/appointment.service";
 import {Appointment} from "../models/appointment.model";
+import {Patient} from "../models/patient.model";
+import {PatientService} from "../services/patient.service";
 
 @Component({
   selector: 'app-doctor',
@@ -33,7 +35,9 @@ export class DoctorComponent implements OnInit {
   constructor(private doctorService: DoctorService,
               private prescriptionService: PrescriptionService,
               private appointmentService: AppointmentService,
-              private tokenService: TokenStorageService) {
+              private tokenService: TokenStorageService,
+              private patientService: PatientService) {
+
   }
 
   ngOnInit(): void {
@@ -62,10 +66,19 @@ export class DoctorComponent implements OnInit {
   }
 
   addAppointment(date: string, time: string, patientId: string) {
-    let appointment: Appointment;
-    this.appointmentService.addAppointment({date, time} as Appointment)
-      .subscribe(app => appointment = app);
-    //TODO assigning appointments to doctor and patient
+    this.getDoctorByUsername();
+    let patient_id = Number(patientId.trim());
+    let patient: Patient | undefined;
+    let doctor: Doctor | undefined = this.doctor;
+    this.patientService.getPatient(patient_id).subscribe(pat => {
+      patient = pat;
+      console.log(patient);
+      console.log(doctor);
+      this.appointmentService.addAppointment({date, time, doctor, patient} as Appointment)
+        .subscribe(appointment => {
+          console.log(appointment);
+        });
+    })
   }
 
   addPrescription(appointmentId: number | undefined, recommendation: string): void {
