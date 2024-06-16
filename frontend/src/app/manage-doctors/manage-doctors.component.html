@@ -74,26 +74,29 @@
     <input [(ngModel)]="displayDoctor.description">
   </label>
   <br>
+  <label>Appointments:
   <ul>
-    <label>Appointments:</label>
     <li *ngFor="let appointment of displayDoctor.appointmentList">
-      <label>Date:
-      <input [(ngModel)]="displayDoctor.appointmentList[displayDoctor.appointmentList.indexOf(appointment)].date">
+      <span *ngIf="appointment != undefined && appointment != null">
+      <label>
+        Date:{{displayDoctor.appointmentList[displayDoctor.appointmentList.indexOf(appointment)].date}}
       </label>
       <br>
-      <label>Time:
-        <input [(ngModel)]="displayDoctor.appointmentList[displayDoctor.appointmentList.indexOf(appointment)].time">
+      <label>
+        Time: {{displayDoctor.appointmentList[displayDoctor.appointmentList.indexOf(appointment)].time}}
       </label>
       <br>
       <label *ngIf="appointment.patient">
         Patient: {{appointment.patient.firstName}} {{appointment.patient.lastName}}
       </label>
       <br>
-      <label *ngIf="appointment.prescription.recommendation">
-        Prescription: {{displayDoctor.appointmentList[displayDoctor.appointmentList.indexOf(appointment)].prescription.recommendation}}
+      <label *ngIf="appointment.prescription != undefined && appointment.prescription != null">
+        Prescription: {{displayDoctor.appointmentList[displayDoctor.appointmentList.indexOf(appointment)].prescription?.recommendation}}
       </label>
+      </span>
     </li>
   </ul>
+  </label>
   <button (click)="updateSelected()">Update</button>
   <button (click)="deleteSelected()">Delete</button>
 </div>

@@ -45,9 +45,9 @@ export class AppointmentService {
     );
   }
 
-  updateAppointment(appointment: Appointment, id:number): Observable<Appointment> {
+  updateAppointment(appointment: Appointment, id:number): Observable<Appointment | null> {
     return this.http.put<Appointment>(`${this.appointmentsUrl}/${id}`, appointment, httpOptions).pipe(
-      tap((appointmentUpdated: Appointment) => this.log(`updated appointment id=${appointmentUpdated.id}`)),
+      tap((appointmentUpdated: Appointment) => this.log(`updated appointment id=${appointmentUpdated?.id}`)),
       catchError(this.handleError<any>('updateAppointment'))
     );
   }

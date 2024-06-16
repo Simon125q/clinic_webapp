@@ -104,6 +104,7 @@ public class Doctor {
                 "id='" + id + '\'' +
                 ", firstname='" + firstName + '\'' +
                 ", lastname='" + lastName + '\'' +
+                ", username='" + username + '\'' +
                 '}';
     }
 }

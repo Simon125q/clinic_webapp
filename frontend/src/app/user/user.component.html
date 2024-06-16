@@ -37,7 +37,9 @@
       <label>Date: {{appointment.date}}</label><br>
       <label>Time: {{appointment.time}}</label><br>
       <label>Doctor: {{appointment.doctor?.firstName}} {{appointment.doctor?.lastName}}</label><br>
-      <label>Prescription: {{appointment.prescription.recommendation}}</label>
+      <label *ngIf="appointment.prescription != undefined">
+        Prescription: {{appointment.prescription.recommendation}}
+      </label>
     </li>
   </ul>
 </div>

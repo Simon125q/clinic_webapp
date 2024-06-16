@@ -69,20 +69,20 @@
   <ul>
     <label>Appointments:</label>
     <li *ngFor="let appointment of displayPatient.appointmentList">
-      <label>Date
-        <input [(ngModel)]="displayPatient.appointmentList[displayPatient.appointmentList.indexOf(appointment)].date">
+      <label>
+        Date: {{displayPatient.appointmentList[displayPatient.appointmentList.indexOf(appointment)].date}}
       </label>
       <br>
-      <label>Time
-        <input [(ngModel)]="displayPatient.appointmentList[displayPatient.appointmentList.indexOf(appointment)].time">
+      <label>
+        Time: {{displayPatient.appointmentList[displayPatient.appointmentList.indexOf(appointment)].time}}
       </label>
       <br>
       <label *ngIf="appointment.doctor">
         Patient: {{appointment.doctor.firstName}} {{appointment.doctor.lastName}}
       </label>
       <br>
-      <label *ngIf="appointment.prescription.recommendation">
-        Prescription: {{displayPatient.appointmentList[displayPatient.appointmentList.indexOf(appointment)].prescription.recommendation}}
+      <label *ngIf="appointment.prescription != undefined">
+        Prescription: {{displayPatient.appointmentList[displayPatient.appointmentList.indexOf(appointment)].prescription?.recommendation}}
       </label>
     </li>
   </ul>

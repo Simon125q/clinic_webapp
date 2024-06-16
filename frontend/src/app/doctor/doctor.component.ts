@@ -71,10 +71,13 @@ export class DoctorComponent implements OnInit {
   addPrescription(appointmentId: number | undefined, recommendation: string): void {
     //TODO assigning prescription to appointment
     let appointment = this.doctor?.appointmentList.filter(appointment => appointment.id == appointmentId)[0];
-    if (appointment != undefined && appointment.prescription.id != undefined) {
+    console.log(appointment)
+    if (appointment != undefined && appointment.prescription != null && appointment.prescription.id != undefined) {
+      console.log(appointment.prescription)
       this.prescriptionService.updatePrescription({recommendation} as Prescription, appointment.prescription.id);
     }
     else if (appointment != undefined && appointmentId != undefined) {
+      console.log("else")
       this.prescriptionService.addPrescription({recommendation} as Prescription)
         .subscribe(pres => appointment.prescription = pres);
 

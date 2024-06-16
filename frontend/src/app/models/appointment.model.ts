@@ -7,7 +7,7 @@ export class Appointment {
   id?: number;
   date: string;
   time: string;
-  prescription: Prescription;
+  prescription: Prescription | undefined | null;
   doctor?: Doctor;
   patient?: Patient;
 

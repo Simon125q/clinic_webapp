@@ -92,6 +92,7 @@ public class AppointmentRESTController {
 
     @RequestMapping(value="/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Appointment> updateAppointment(@RequestBody Appointment appointment, @PathVariable("id") long id) {
+        System.out.println(appointment);
         appointment.setId(id);
         appointmentRepository.save(appointment);
         return new ResponseEntity<Appointment>(HttpStatus.NO_CONTENT);

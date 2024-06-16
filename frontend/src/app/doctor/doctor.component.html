@@ -45,15 +45,17 @@
 <div *ngIf="showingAppointments && displayDoctor != undefined">
   <ul>
     <li *ngFor="let appointment of displayDoctor.appointmentList">
+    <span *ngIf="appointment != null">
       <label>Date: {{appointment.date}}</label><br>
       <label>Time: {{appointment.time}}</label><br>
       <label>Patient: {{appointment.patient?.firstName}} {{appointment.patient?.lastName}}</label><br>
       <label>Prescription:
-        <input value = "{{appointment.prescription.recommendation}}"></label>
+        <input #appRecommendation></label>
 
-      <button (click)="addPrescription(appointment.id, appointment.prescription.recommendation)">
+      <button (click)="addPrescription(appointment.id, appRecommendation.value); appRecommendation.value = ''">
         Add prescription
       </button>
+      </span>
     </li>
   </ul>
 </div>

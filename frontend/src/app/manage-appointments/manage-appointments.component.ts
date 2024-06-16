@@ -81,7 +81,7 @@ export class ManageAppointmentsComponent implements OnInit {
       else if (appointment.time.toLowerCase().includes(this.searchPhrase.trim().toLowerCase())) {
         this.filteredAppointmentList.push(appointment)
       }
-      else if (appointment.prescription.recommendation.toLowerCase().includes(this.searchPhrase.trim().toLowerCase())) {
+      else if (appointment.prescription != undefined && appointment.prescription.recommendation.toLowerCase().includes(this.searchPhrase.trim().toLowerCase())) {
         this.filteredAppointmentList.push(appointment)
       }
     }
@@ -145,27 +145,33 @@ export class ManageAppointmentsComponent implements OnInit {
     let newAppointment: Appointment | undefined;
     let patient_id = Number(patientId.trim());
     let doctor_id = Number(doctorId.trim());
-    // let doctor: Doctor | undefined;
-    // let patient: Patient | undefined;
-    // this.doctorService.getDoctor(doctor_id)
-    //   .subscribe(doc => this.appointmentDoctor = doc);
-    // this.patientService.getPatient(patient_id)
-    //   .subscribe(pat => this.appointmentPatient = pat);
-    this.appointmentService.addAppointment({date, time} as Appointment)
-      .subscribe({
-        next: (appointment: Appointment) => {this.selectedAppointment = appointment},
-        error: () => {},
-        complete: () => {
-          if (this.selectedAppointment != undefined) {
-            this.appointmentList?.push(this.selectedAppointment);
-            this.filteredAppointmentList = this.appointmentList;
-          }
-          if (this.appointmentList != undefined) {
-            this.appointmentService.totalItems.next(this.appointmentList.length);
-            console.log(this.appointmentList.length);
-          }
-        }
-      });
+    let doctor: Doctor | undefined;
+    let patient: Patient | undefined;
+    this.doctorService.getDoctor(doctor_id).subscribe(
+      doc => {
+        doctor = doc;
+        console.log(doctor);
+        this.patientService.getPatient(patient_id).subscribe(pat => {
+          patient = pat;
+          console.log(patient);
+          this.appointmentService.addAppointment({date, time, doctor, patient} as Appointment)
+            .subscribe({
+              next: (appointment: Appointment) => {this.selectedAppointment = appointment},
+              error: () => {},
+              complete: () => {
+                if (this.selectedAppointment != undefined) {
+                  this.appointmentList?.push(this.selectedAppointment);
+                  this.filteredAppointmentList = this.appointmentList;
+                }
+                if (this.appointmentList != undefined) {
+                  this.appointmentService.totalItems.next(this.appointmentList.length);
+                  console.log(this.appointmentList.length);
+                }
+              }
+            });
+        })
+      }
+    )
       if (this.selectedAppointment != undefined) {
         this.partialUpdate(this.selectedAppointment, "", "", doctorId, patientId);
       }
@@ -199,8 +205,8 @@ export class ManageAppointmentsComponent implements OnInit {
     if (id != undefined) {
       this.appointmentService.updateAppointment({date, time} as Appointment, id)
         .subscribe({
-          next: (appointment: Appointment) => {
-            if (this.appointmentList != undefined) {
+          next: (appointment: Appointment | null) => {
+            if (this.appointmentList != undefined && appointment != null) {
               let index = this.appointmentList?.indexOf(chosenToUpdateAppointment);
               this.appointmentList[index] = appointment;
             }

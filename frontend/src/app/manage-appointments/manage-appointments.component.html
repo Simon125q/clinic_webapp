@@ -34,7 +34,7 @@
 </ul>
 <ul class="appointments" *ngIf="filteredAppointmentList != undefined">
   <li *ngFor="let appointment of filteredAppointmentList">
-    <div class="a" (click)="displayDetail(appointment)">
+    <div class="a" (click)="displayDetail(appointment)" *ngIf="appointment != null">
       <span class="badge">{{appointment.id}}</span>
       {{appointment.date}} {{appointment.time}}
     </div>
@@ -59,7 +59,7 @@
     Patient : {{appointmentPatient.firstName}} {{appointmentPatient.lastName}}
   </label>
   <br>
-  <label>
+  <label *ngIf="displayAppointment.prescription != undefined && displayAppointment.prescription != null && displayAppointment.prescription.recommendation">
     Prescription: {{displayAppointment.prescription.recommendation}}
   </label>
   <br>
