@@ -69,15 +69,15 @@ export class AppointmentService {
     if (appointmentTime!= "") {
       changes["time"] = appointmentTime;
     }
-    if (doctor_id != -1) {
+    if (doctor_id != -1 && doctor_id != 0) {
       changes["doctor_id"] = doctor_id;
     }
-    if (patient_id != -1) {
+    if (patient_id != -1 && patient_id != 0) {
       changes["patient_id"] = patient_id;
     }
 
     return this.http.patch<Appointment>(url, changes, httpOptions).pipe(
-      tap((appointmentChanged: Appointment) => this.log(`changed appointment id=${appointmentChanged.id}`)),
+      tap((appointmentChanged: Appointment) => this.log(`changed appointment id=${appointmentChanged?.id}`)),
       catchError(this.handleError<Appointment>('partialUpdate'))
     );
   }

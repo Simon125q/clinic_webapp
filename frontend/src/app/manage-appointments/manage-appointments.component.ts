@@ -117,7 +117,7 @@ export class ManageAppointmentsComponent implements OnInit {
 
   updateSelected(): void {
     if (this.displayAppointment != undefined && this.selectedAppointment != undefined) {
-      this.update(this.displayAppointment.date, this.displayAppointment.time, this.selectedAppointment);
+      this.partialUpdate(this.selectedAppointment, this.selectedAppointment.date, this.selectedAppointment.time, "", "");
     }
     this.hideDetail();
   }
@@ -201,7 +201,7 @@ export class ManageAppointmentsComponent implements OnInit {
     let id = chosenToUpdateAppointment.id;
     date = date.trim();
     time = time.trim();
-    console.log(id);
+    console.log(chosenToUpdateAppointment)
     if (id != undefined) {
       this.appointmentService.updateAppointment({date, time} as Appointment, id)
         .subscribe({
@@ -228,11 +228,12 @@ export class ManageAppointmentsComponent implements OnInit {
     time = time.trim();
     let patient_id = Number(patientId.trim());
     let doctor_id = Number(doctorId.trim());
-    console.log(appointment.id);
+    console.log(patient_id);
     if (appointment.id != undefined) {
       this.appointmentService.partialUpdate(appointment, date, time, doctor_id, patient_id)
         .subscribe({
           next: (updatedAppointment: Appointment) => {
+            console.log(updatedAppointment);
             if (this.appointmentList != undefined) {
               let index = this.appointmentList?.indexOf(appointment);
               this.appointmentList[index] = updatedAppointment;

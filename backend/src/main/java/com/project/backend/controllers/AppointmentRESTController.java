@@ -105,11 +105,10 @@ public class AppointmentRESTController {
             System.out.println("Appointment not found!");
             return new ResponseEntity<Appointment>(HttpStatus.NOT_FOUND);
         }
-        partialUpdate(appointment,updates);
-        return new ResponseEntity<Appointment>(HttpStatus.OK);
+        return partialUpdate(appointment,updates);
     }
 
-    private void partialUpdate(Appointment appointment, Map<String, Object> updates) {
+    private ResponseEntity<Appointment> partialUpdate(Appointment appointment, Map<String, Object> updates) {
         if (updates.containsKey("date")) {
             appointment.setDate((String) updates.get("date"));
         }
@@ -136,6 +135,7 @@ public class AppointmentRESTController {
         }
 
         appointmentRepository.save(appointment);
+        return new ResponseEntity<Appointment>(appointment, HttpStatus.OK);
     }
 
 }
