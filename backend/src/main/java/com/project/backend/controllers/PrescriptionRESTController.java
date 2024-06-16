@@ -38,12 +38,17 @@ public class PrescriptionRESTController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Prescription> addPrescription(@RequestBody Prescription prescription) {
-        System.out.println(prescription.getId() + " " + prescription.getRecommendation() + " " + prescription.getAppointment());
-        prescriptionRepository.save(prescription);
-        Appointment temp = appointmentRepository.findById(prescription.getAppointment().getId());
-        temp.setPrescription(prescription);
-        appointmentRepository.save(temp);
-        return new ResponseEntity<Prescription>(prescription, HttpStatus.CREATED);
+        if (appointmentRepository.findById(prescription.getAppointment().getId()) == null) {
+            System.out.println(prescription.getId() + " " + prescription.getRecommendation() + " " + prescription.getAppointment());
+            prescriptionRepository.save(prescription);
+            Appointment temp = appointmentRepository.findById(prescription.getAppointment().getId());
+            temp.setPrescription(prescription);
+            appointmentRepository.save(temp);
+            return new ResponseEntity<Prescription>(prescription, HttpStatus.CREATED);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
     }
 
     @RequestMapping(method = RequestMethod.DELETE)

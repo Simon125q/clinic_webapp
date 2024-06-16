@@ -45,7 +45,7 @@
 <div *ngIf="showingAppointments && displayDoctor != undefined">
   <ul>
     <li *ngFor="let appointment of displayDoctor.appointmentList">
-    <span *ngIf="appointment != null">
+    <div *ngIf="appointment != null" class="appointmentDetail">
       <label>Date: {{appointment.date}}</label><br>
       <label>Time: {{appointment.time}}</label><br>
       <label>Patient: {{appointment.patient?.firstName}} {{appointment.patient?.lastName}}</label><br>
@@ -62,11 +62,11 @@
           Prescription: {{appointment.prescription.recommendation}}
         </label>
       </span>
-      </span>
+      </div>
     </li>
   </ul>
 </div>
-<div *ngIf="addingNewAppointment">
+<div *ngIf="addingNewAppointment" class="add">
   <label>Date:
     <input #appDate>
   </label>

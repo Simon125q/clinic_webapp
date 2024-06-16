@@ -27,56 +27,58 @@
     <span (click)="sort('specialization')">specialization</span>
   </span>
 </span>
-<ul class="doctors" *ngIf="filteredDoctorList == undefined">
-  <li *ngFor="let doc of doctorList">
-    <div class="a" (click)="displayDetail(doc)">
-      <span class="badge">{{doc.id}}</span>
-      {{doc.lastName}} {{doc.firstName}}
-    </div>
-  </li>
-</ul>
-<ul class="doctors" *ngIf="filteredDoctorList != undefined">
-  <li *ngFor="let doc of filteredDoctorList">
-    <div class="a" (click)="displayDetail(doc)">
-      <span class="badge">{{doc.id}}</span>
-      {{doc.lastName}} {{doc.firstName}}
-    </div>
-  </li>
-</ul>
+<div>
+  <div class="list">
+    <ul class="doctors" *ngIf="filteredDoctorList == undefined">
+      <li *ngFor="let doc of doctorList">
+        <div class="a" (click)="displayDetail(doc)">
+          <span class="badge">{{doc.id}}</span>
+          {{doc.lastName}} {{doc.firstName}}
+        </div>
+      </li>
+    </ul>
+    <ul class="doctors" *ngIf="filteredDoctorList != undefined">
+      <li *ngFor="let doc of filteredDoctorList">
+        <div class="a" (click)="displayDetail(doc)">
+          <span class="badge">{{doc.id}}</span>
+          {{doc.lastName}} {{doc.firstName}}
+        </div>
+      </li>
+    </ul>
+  </div>
 
-
-<div class="detail" *ngIf="displayDoctor">
-  <label>Firstname:
-    <input [(ngModel)]="displayDoctor.firstName">
-  </label>
-  <br>
-  <label>Lastname:
-    <input [(ngModel)]="displayDoctor.lastName">
-  </label>
-  <br>
-  <label>Username:
-    <input [(ngModel)]="displayDoctor.username">
-  </label>
-  <br>
-  <label>Email:
-    <input [(ngModel)]="displayDoctor.email">
-  </label>
-  <br>
-  <label>Phone Number:
-    <input [(ngModel)]="displayDoctor.telephone">
-  </label>
-  <br>
-  <label>Specialization:
-    <input [(ngModel)]="displayDoctor.specialization">
-  </label>
-  <br>
-  <label>Description:
-    <input [(ngModel)]="displayDoctor.description">
-  </label>
-  <br>
-  <label>Appointments:
-  <ul>
-    <li *ngFor="let appointment of displayDoctor.appointmentList">
+  <div class="detail" *ngIf="displayDoctor">
+    <label>Firstname:
+      <input [(ngModel)]="displayDoctor.firstName">
+    </label>
+    <br>
+    <label>Lastname:
+      <input [(ngModel)]="displayDoctor.lastName">
+    </label>
+    <br>
+    <label>Username:
+      <input [(ngModel)]="displayDoctor.username">
+    </label>
+    <br>
+    <label>Email:
+      <input [(ngModel)]="displayDoctor.email">
+    </label>
+    <br>
+    <label>Phone Number:
+      <input [(ngModel)]="displayDoctor.telephone">
+    </label>
+    <br>
+    <label>Specialization:
+      <input [(ngModel)]="displayDoctor.specialization">
+    </label>
+    <br>
+    <label>Description:
+      <input [(ngModel)]="displayDoctor.description">
+    </label>
+    <br>
+    <label>Appointments:
+      <ul>
+        <li *ngFor="let appointment of displayDoctor.appointmentList">
       <span *ngIf="appointment != undefined && appointment != null">
       <label>
         Date:{{displayDoctor.appointmentList[displayDoctor.appointmentList.indexOf(appointment)].date}}
@@ -94,14 +96,15 @@
         Prescription: {{displayDoctor.appointmentList[displayDoctor.appointmentList.indexOf(appointment)].prescription?.recommendation}}
       </label>
       </span>
-    </li>
-  </ul>
-  </label>
-  <button (click)="updateSelected()">Update</button>
-  <button (click)="deleteSelected()">Delete</button>
+        </li>
+      </ul>
+    </label>
+    <button (click)="updateSelected()">Update</button>
+    <button (click)="deleteSelected()">Delete</button>
+  </div>
 </div>
 
-<div class="add_new" *ngIf="addingNew">
+<div class="detail" *ngIf="addingNew">
 
   <label>Firstname:
     <input #docFirstname>

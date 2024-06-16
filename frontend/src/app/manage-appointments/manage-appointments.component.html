@@ -24,50 +24,53 @@
     <span (click)="sort('time')">time</span>
   </span>
 </span>
-<ul class="appointments" *ngIf="filteredAppointmentList == undefined">
-  <li *ngFor="let appointment of appointmentList">
-    <div class="a" (click)="displayDetail(appointment)">
-      <span class="badge">{{appointment.id}}</span>
-      {{appointment.date}} {{appointment.time}}
-    </div>
-  </li>
-</ul>
-<ul class="appointments" *ngIf="filteredAppointmentList != undefined">
-  <li *ngFor="let appointment of filteredAppointmentList">
-    <div class="a" (click)="displayDetail(appointment)" *ngIf="appointment != null">
-      <span class="badge">{{appointment.id}}</span>
-      {{appointment.date}} {{appointment.time}}
-    </div>
-  </li>
-</ul>
+<div>
+  <div class="list">
+    <ul class="appointments" *ngIf="filteredAppointmentList == undefined">
+      <li *ngFor="let appointment of appointmentList">
+        <div class="a" (click)="displayDetail(appointment)">
+          <span class="badge">{{appointment.id}}</span>
+          {{appointment.date}} {{appointment.time}}
+        </div>
+      </li>
+    </ul>
+    <ul class="appointments" *ngIf="filteredAppointmentList != undefined">
+      <li *ngFor="let appointment of filteredAppointmentList">
+        <div class="a" (click)="displayDetail(appointment)" *ngIf="appointment != null">
+          <span class="badge">{{appointment.id}}</span>
+          {{appointment.date}} {{appointment.time}}
+        </div>
+      </li>
+    </ul>
+  </div>
 
+  <div class="detail" *ngIf="displayAppointment">
+    <label>Date:
+      <input [(ngModel)]="displayAppointment.date">
+    </label>
+    <br>
+    <label>Time:
+      <input [(ngModel)]="displayAppointment.time">
+    </label>
+    <br>
+    <label *ngIf="appointmentDoctor != undefined">
+      Doctor: {{appointmentDoctor.firstName}} {{appointmentDoctor.lastName}}
+    </label>
+    <br>
+    <label *ngIf="appointmentPatient != undefined">
+      Patient : {{appointmentPatient.firstName}} {{appointmentPatient.lastName}}
+    </label>
+    <br>
+    <label *ngIf="displayAppointment.prescription != undefined && displayAppointment.prescription != null && displayAppointment.prescription.recommendation">
+      Prescription: {{displayAppointment.prescription.recommendation}}
+    </label>
+    <br>
+    <button (click)="updateSelected()">Update</button>
+    <button (click)="deleteSelected()">Delete</button>
+  </div>
 
-<div class="detail" *ngIf="displayAppointment">
-  <label>Date:
-    <input [(ngModel)]="displayAppointment.date">
-  </label>
-  <br>
-  <label>Time:
-    <input [(ngModel)]="displayAppointment.time">
-  </label>
-  <br>
-  <label *ngIf="appointmentDoctor != undefined">
-    Doctor: {{appointmentDoctor.firstName}} {{appointmentDoctor.lastName}}
-  </label>
-  <br>
-  <label *ngIf="appointmentPatient != undefined">
-    Patient : {{appointmentPatient.firstName}} {{appointmentPatient.lastName}}
-  </label>
-  <br>
-  <label *ngIf="displayAppointment.prescription != undefined && displayAppointment.prescription != null && displayAppointment.prescription.recommendation">
-    Prescription: {{displayAppointment.prescription.recommendation}}
-  </label>
-  <br>
-  <button (click)="updateSelected()">Update</button>
-  <button (click)="deleteSelected()">Delete</button>
 </div>
-
-<div class="add_new" *ngIf="addingNew">
+<div class="detail" *ngIf="addingNew">
 
   <label>Date:
     <input #appointmentDate>

@@ -1,0 +1,75 @@
+input{
+  height: 10px;
+  background: #e0dede;
+  justify-content: center;
+  margin: 10px auto;
+  padding: 12px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  justify-content: center;
+  align-items: center;
+}
+button{
+  height: 35px;
+  margin: 10px;
+  justify-content: center;
+  color: #fff;
+  background: #573b8a;
+  font-size: 1em;
+  font-weight: bold;
+  margin-top: 30px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  transition: .2s ease-in;
+  cursor: pointer;
+}
+button:hover{
+  background: #6d44b8;
+}
+.details {
+  /* Center the div */
+  justify-content: center;
+  align-items: center;
+
+  /* Set background color */
+  background-color: lightblue;
+
+  /* Make corners round */
+  border-radius: 10px; /* You can adjust the value to your preference */
+
+  /* Optional: Set a fixed size for the div */
+  width: 200px;  /* Adjust the width as needed */
+  height: 600px; /* Adjust the height as needed */
+
+  padding: 15px;
+  margin: auto;
+  margin-top: 30px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+li {
+  list-style: none;
+}
+
+.appointmentDetail {
+  background-color: lightblue;
+  height: 100px;
+  width: 200px;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+}
+
+.add {
+  background-color: lightblue;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 10px;
+  width: fit-content;
+}
+
