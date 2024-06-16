@@ -1,6 +1,8 @@
 package com.project.backend.controllers;
 
+import com.project.backend.model.Appointment;
 import com.project.backend.model.Prescription;
+import com.project.backend.repository.AppointmentRepository;
 import com.project.backend.repository.PrescriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,10 +17,13 @@ import java.util.Map;
 @RequestMapping("/prescriptions")
 public class PrescriptionRESTController {
     private final PrescriptionRepository prescriptionRepository;
+    private final AppointmentRepository appointmentRepository;
 
     @Autowired
-    public PrescriptionRESTController(PrescriptionRepository prescriptionRepository) {
+    public PrescriptionRESTController(PrescriptionRepository prescriptionRepository,
+                                      AppointmentRepository appointmentRepository) {
         this.prescriptionRepository = prescriptionRepository;
+        this.appointmentRepository = appointmentRepository;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -33,13 +38,12 @@ public class PrescriptionRESTController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Prescription> addPrescription(@RequestBody Prescription prescription) {
-        if (prescription.getAppointment() != null) {
-            prescriptionRepository.save(prescription);
-            return new ResponseEntity<Prescription>(prescription, HttpStatus.CREATED);
-        }
-        else {
-            return new ResponseEntity<Prescription>(prescription, HttpStatus.CONFLICT);
-        }
+        System.out.println(prescription.getId() + " " + prescription.getRecommendation() + " " + prescription.getAppointment());
+        prescriptionRepository.save(prescription);
+        Appointment temp = appointmentRepository.findById(prescription.getAppointment().getId());
+        temp.setPrescription(prescription);
+        appointmentRepository.save(temp);
+        return new ResponseEntity<Prescription>(prescription, HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.DELETE)

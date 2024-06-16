@@ -49,12 +49,19 @@
       <label>Date: {{appointment.date}}</label><br>
       <label>Time: {{appointment.time}}</label><br>
       <label>Patient: {{appointment.patient?.firstName}} {{appointment.patient?.lastName}}</label><br>
-      <label>Prescription:
-        <input #appRecommendation></label>
+      <span *ngIf="appointment.prescription == undefined || appointment.prescription == null">
+        <label>Prescription:
+          <input #appRecommendation></label>
 
-      <button (click)="addPrescription(appointment.id, appRecommendation.value); appRecommendation.value = ''">
-        Add prescription
-      </button>
+        <button (click)="addPrescription(appointment.id, appRecommendation.value); appRecommendation.value = ''">
+          Add prescription
+        </button>
+      </span>
+      <span *ngIf="appointment.prescription != undefined && appointment.prescription != null">
+        <label>
+          Prescription: {{appointment.prescription.recommendation}}
+        </label>
+      </span>
       </span>
     </li>
   </ul>

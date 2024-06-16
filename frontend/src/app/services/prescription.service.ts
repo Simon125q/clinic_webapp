@@ -56,6 +56,7 @@ export class PrescriptionService {
   }
 
   addPrescription(prescription: Prescription): Observable<Prescription> {
+    console.log(prescription);
     return this.http.post<Prescription>(this.prescriptionsUrl, prescription, httpOptions).pipe(
       tap((prescriptionAdded: Prescription) => this.log(`added prescription id=${prescriptionAdded.id}`)),
       catchError(this.handleError<Prescription>('addPrescription'))
