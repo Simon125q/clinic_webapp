@@ -38,7 +38,7 @@ public class PrescriptionRESTController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Prescription> addPrescription(@RequestBody Prescription prescription) {
-        if (appointmentRepository.findById(prescription.getAppointment().getId()) == null) {
+        if (appointmentRepository.findById(prescription.getAppointment().getId()).getPrescription() == null) {
             System.out.println(prescription.getId() + " " + prescription.getRecommendation() + " " + prescription.getAppointment());
             prescriptionRepository.save(prescription);
             Appointment temp = appointmentRepository.findById(prescription.getAppointment().getId());

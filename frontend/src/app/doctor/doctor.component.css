@@ -58,7 +58,7 @@ li {
 
 .appointmentDetail {
   background-color: lightblue;
-  height: 100px;
+  height: fit-content;
   width: 200px;
   border-radius: 10px;
   padding: 10px;

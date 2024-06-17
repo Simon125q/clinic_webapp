@@ -163,3 +163,14 @@ button:hover{
   width: fit-content;
   float: left;
 }
+
+.appointmentDetail {
+  background-color: lightskyblue;
+  margin: 5px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+li {
+  list-style: none;
+}

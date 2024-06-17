@@ -73,21 +73,23 @@
     <ul>
       <label>Appointments:</label>
       <li *ngFor="let appointment of displayPatient.appointmentList">
-        <label>
-          Date: {{displayPatient.appointmentList[displayPatient.appointmentList.indexOf(appointment)].date}}
-        </label>
-        <br>
-        <label>
-          Time: {{displayPatient.appointmentList[displayPatient.appointmentList.indexOf(appointment)].time}}
-        </label>
-        <br>
-        <label *ngIf="appointment.doctor">
-          Patient: {{appointment.doctor.firstName}} {{appointment.doctor.lastName}}
-        </label>
-        <br>
-        <label *ngIf="appointment.prescription != undefined">
-          Prescription: {{displayPatient.appointmentList[displayPatient.appointmentList.indexOf(appointment)].prescription?.recommendation}}
-        </label>
+        <div class="appointmentDetail">
+          <label>
+            Date: {{displayPatient.appointmentList[displayPatient.appointmentList.indexOf(appointment)].date}}
+          </label>
+          <br>
+          <label>
+            Time: {{displayPatient.appointmentList[displayPatient.appointmentList.indexOf(appointment)].time}}
+          </label>
+          <br>
+          <label *ngIf="appointment.doctor">
+            Doctor: {{appointment.doctor.firstName}} {{appointment.doctor.lastName}}
+          </label>
+          <br>
+          <label *ngIf="appointment.prescription != undefined">
+            Prescription: {{displayPatient.appointmentList[displayPatient.appointmentList.indexOf(appointment)].prescription?.recommendation}}
+          </label>
+        </div>
       </li>
     </ul>
     <button (click)="updateSelected()">Update</button>

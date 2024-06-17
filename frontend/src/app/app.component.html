@@ -14,13 +14,13 @@
       <a routerLink="/contact">Contact</a>
     </span>
     <span *ngIf="authority === 'admin'">
-      <a routerLink="/admin">Admin</a>
+      <a routerLink="/admin">Admin Panel</a>
     </span>
     <span *ngIf="authority === 'patient'">
-      <a routerLink="/user">User</a>
+      <a routerLink="/user">User Panel</a>
     </span>
     <span *ngIf="authority === 'doctor'">
-      <a routerLink="/doctor">Doctor</a>
+      <a routerLink="/doctor">Doctor Panel</a>
     </span>
     <span *ngIf="!authority">
       <a routerLink="/auth/login">Login</a>
